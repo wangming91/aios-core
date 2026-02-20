@@ -1,0 +1,84 @@
+# Learning Mode Quickstart Template
+# Template for learning AIOS workflows
+#
+# @story STORY-OPT-A2
+
+id: learning
+title: "Learning Mode"
+description: "Learn how to use AIOS effectively"
+icon: "book"
+estimatedTime: "20 min"
+
+steps:
+  # Step 1: Learning Topic
+  - id: topic
+    type: select
+    prompt: "What would you like to learn?"
+    options:
+      - value: basics
+        label: "AIOS Basics"
+        description: "Core concepts and getting started"
+        tour: "first-run"
+      - value: agents
+        label: "Agent System"
+        description: "How to work with AI agents"
+        tour: "agents"
+      - value: stories
+        label: "Story-Driven Development"
+        description: "Creating and managing stories"
+        tour: "stories"
+      - value: quality
+        label: "Quality Gates"
+        description: "Testing and quality assurance"
+        tour: "quality"
+      - value: cli
+        label: "CLI Commands"
+        description: "All available CLI commands"
+        tour: "cli-commands"
+    default: basics
+
+  # Step 2: Learning Style
+  - id: style
+    type: select
+    prompt: "Preferred learning style"
+    options:
+      - value: interactive
+        label: "Interactive Tour"
+        description: "Step-by-step guided experience"
+      - value: reference
+        label: "Quick Reference"
+        description: "Command cheat sheet"
+      - value: examples
+        label: "Examples"
+        description: "Learn by example scenarios"
+    default: interactive
+
+actions:
+  - type: start-tour
+    description: "Start the selected learning tour"
+    tourMapping:
+      basics: "first-run"
+      agents: "agents"
+      stories: "stories"
+      quality: "quality"
+      cli: "cli-commands"
+
+  - type: suggest
+    commands:
+      - "aios tour --list - See all available tours"
+      - "aios tour first-run - Start the basic tour"
+      - "aios doctor - Check system health"
+
+nextSteps:
+  - title: "Start Tour"
+    description: "Begin interactive tutorial"
+    command: "aios tour first-run"
+  - title: "View Documentation"
+    description: "Read the Constitution"
+    command: "cat .aios-core/constitution.md"
+  - title: "Ask Questions"
+    description: "Get help from @pm agent"
+    command: "@pm"
+  - title: "See Examples"
+    description: "View example stories"
+    command: "ls docs/stories/completed/"

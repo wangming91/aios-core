@@ -1,0 +1,96 @@
+# ============================================
+# AIOS Preset: Vue + Python
+# ============================================
+# Vue.js frontend with Python (Django/Flask) backend
+# Recommended for: Projects with Vue frontend and Python API
+#
+# @story STORY-OPT-A3
+# ============================================
+
+id: vue-python
+name: "Vue + Python"
+description: "Vue.js frontend with Python backend (Django/Flask)"
+version: "1.0.0"
+
+# Detection rules for auto-suggestion
+detection:
+  language:
+    - nodejs
+    - python
+  framework:
+    - vue
+    - django
+    - flask
+  patterns:
+    - "package.json with vue dependency"
+    - "requirements.txt or pyproject.toml"
+    - "src/ or frontend/ directory"
+
+# Configuration to apply
+config:
+  # IDE Configuration
+  ide: claude-code
+
+  # Agent team configuration (fullstack for Vue + Python)
+  agentTeam: fullstack
+
+  # MCP servers (minimal by default)
+  mcpServers: minimal
+
+  # Workflow style
+  workflow: agile
+
+  # Files to always load for @dev context
+  devLoadAlwaysFiles:
+    - "docs/prd/**/*.md"
+    - "docs/architecture/**/*.md"
+    # Frontend
+    - "src/**/*.vue"
+    - "src/**/*.ts"
+    - "src/**/*.js"
+    # Backend
+    - "api/**/*.py"
+    - "backend/**/*.py"
+    - "app/**/*.py"
+
+  # Testing configuration
+  testing:
+    framework: vitest  # Vue typically uses Vitest
+    backendFramework: pytest  # Python backend
+    coverageThreshold: 80
+    testPattern:
+      - "**/*.test.ts"
+      - "**/*.spec.ts"
+      - "**/test_*.py"
+      - "**/*_test.py"
+
+  # Quality tools
+  quality:
+    lint: eslint
+    format: prettier
+    pythonLint: flake8
+    pythonFormat: black
+
+  # Documentation paths
+  documentation:
+    storiesDir: "docs/stories"
+    architectureDir: "docs/architecture"
+
+# Next steps after applying preset
+nextSteps:
+  - title: "Install frontend dependencies"
+    command: "npm install"
+  - title: "Install Python dependencies"
+    command: "pip install -r requirements.txt"
+  - title: "Create your first story"
+    command: "aios quickstart feature"
+  - title: "Run AIOS doctor to validate"
+    command: "aios doctor"
+
+# Notes about this preset
+notes:
+  - "Frontend: Vue.js with Vitest testing"
+  - "Backend: Python with Pytest"
+  - "ESLint + Prettier for frontend"
+  - "Flake8 + Black for Python"
+  - "Full-stack agent team for dual-language projects"

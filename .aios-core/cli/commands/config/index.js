@@ -9,10 +9,12 @@
  *   aios config migrate [--dry-run] [--force]
  *   aios config validate [--level <n>]
  *   aios config init-local
+ *   aios config wizard [--preset <name>] [--detect] [--dry-run]
  *
  * @module cli/commands/config
- * @version 1.0.0
+ * @version 1.1.0
  * @story PRO-4 — Core-Config Split Implementation
+ * @story STORY-OPT-A3 — Config Wizard
  */
 
 'use strict';
@@ -598,6 +600,10 @@ function createConfigCommand() {
     .command('init-local')
     .description('Create local-config.yaml from template')
     .action(initLocalAction);
+
+  // aios config wizard (Story STORY-OPT-A3)
+  const { createWizardCommand } = require('./wizard');
+  configCmd.addCommand(createWizardCommand());
 
   return configCmd;
 }

@@ -1,0 +1,111 @@
+# ============================================
+# AIOS Preset: Full Stack
+# ============================================
+# Generic full-stack configuration for complex projects
+# Recommended for: Monorepos or projects with multiple technologies
+#
+# @story STORY-OPT-A3
+# ============================================
+
+id: fullstack
+name: "Full Stack"
+description: "Generic full-stack configuration for complex projects"
+version: "1.0.0"
+
+# Detection rules for auto-suggestion
+detection:
+  language:
+    - nodejs
+    - python
+    - go
+  framework:
+    - react
+    - vue
+    - angular
+    - express
+    - fastify
+    - django
+    - flask
+  patterns:
+    - "Multiple package.json files (monorepo)"
+    - "apps/ or packages/ directory structure"
+    - "Mixed frontend + backend code"
+
+# Configuration to apply
+config:
+  # IDE Configuration
+  ide: claude-code
+
+  # Agent team configuration (fullstack)
+  agentTeam: fullstack
+
+  # MCP servers (standard set)
+  mcpServers: standard
+
+  # Workflow style
+  workflow: agile
+
+  # Files to always load for @dev context
+  devLoadAlwaysFiles:
+    - "docs/prd/**/*.md"
+    - "docs/architecture/**/*.md"
+    # TypeScript/JavaScript
+    - "packages/**/*.ts"
+    - "packages/**/*.tsx"
+    - "apps/**/*.ts"
+    - "apps/**/*.tsx"
+    # Python
+    - "**/src/**/*.py"
+    - "**/app/**/*.py"
+    # Configuration
+    - "*.config.ts"
+    - "*.config.js"
+
+  # Testing configuration
+  testing:
+    framework: jest
+    coverageThreshold: 80
+    testPattern:
+      - "**/*.test.ts"
+      - "**/*.test.tsx"
+      - "**/*.spec.ts"
+      - "**/*.spec.tsx"
+      - "**/test_*.py"
+      - "**/*_test.py"
+
+  # Quality tools
+  quality:
+    lint: eslint
+    format: prettier
+    typeCheck: typescript
+
+  # Documentation paths
+  documentation:
+    storiesDir: "docs/stories"
+    architectureDir: "docs/architecture"
+
+  # Monorepo-specific settings
+  monorepo:
+    enabled: true
+    workspaces:
+      - "packages/*"
+      - "apps/*"
+
+# Next steps after applying preset
+nextSteps:
+  - title: "Install all dependencies"
+    command: "npm install && pip install -r requirements.txt"
+  - title: "Build all packages"
+    command: "npm run build"
+  - title: "Create your first story"
+    command: "aios quickstart feature"
+  - title: "Run AIOS doctor to validate"
+    command: "aios doctor"
+
+# Notes about this preset
+notes:
+  - "Designed for monorepos and complex multi-package projects"
+  - "Includes standard MCP server configuration"
+  - "Supports TypeScript, JavaScript, and Python"
+  - "Full-stack agent team with broad capabilities"
+  - "Enables workspace detection for monorepo features"

@@ -1,0 +1,83 @@
+# Feature Development Quickstart Template
+# Template for starting new feature development workflow
+#
+# @story STORY-OPT-A2
+
+id: feature
+title: "New Feature Development"
+description: "Add a new feature to your project"
+icon: "new"
+estimatedTime: "10 min"
+
+steps:
+  # Step 1: Feature Name
+  - id: name
+    type: input
+    prompt: "Feature name"
+    placeholder: "e.g., User Authentication"
+    required: true
+    help: "Give your feature a concise, descriptive name"
+
+  # Step 2: Feature Description
+  - id: description
+    type: textarea
+    prompt: "Feature description"
+    placeholder: "Describe what this feature does and why it's needed..."
+    required: true
+    help: "A clear description helps agents understand the requirements"
+
+  # Step 3: Feature Type
+  - id: type
+    type: select
+    prompt: "Feature type"
+    options:
+      - value: api
+        label: "API/Backend"
+        description: "Server-side logic, database, APIs"
+      - value: ui
+        label: "Frontend/UI"
+        description: "User interface components"
+      - value: fullstack
+        label: "Full Stack"
+        description: "Both frontend and backend"
+      - value: infrastructure
+        label: "Infrastructure"
+        description: "CI/CD, deployment, DevOps"
+    default: fullstack
+
+  # Step 4: Priority
+  - id: priority
+    type: select
+    prompt: "Priority level"
+    options:
+      - value: p0
+        label: "P0 - Critical"
+      - value: p1
+        label: "P1 - High"
+      - value: p2
+        label: "P2 - Medium"
+      - value: p3
+        label: "P3 - Low"
+    default: p2
+
+actions:
+  - type: create-story
+    template: feature-story.md
+    output: "docs/stories/active/STORY-{id}/story.md"
+
+  - type: suggest
+    commands:
+      - "@dev *develop - Start implementing this feature"
+      - "aios story show STORY-{id} - View story details"
+      - "@qa *test - Request tests for this feature"
+
+nextSteps:
+  - title: "Start Development"
+    description: "Activate @dev agent to begin implementation"
+    command: "@dev"
+  - title: "Review Requirements"
+    description: "Discuss requirements with @pm agent"
+    command: "@pm"
+  - title: "Plan Architecture"
+    description: "Get architecture guidance from @architect"
+    command: "@architect"

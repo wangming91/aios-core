@@ -1,0 +1,276 @@
+# Agent Capabilities Definition
+# 定义每个代理的任务类型、关键词和专长
+
+dev:
+  name: "Developer"
+  description: "Full Stack Developer - 实现代码和修复 Bug"
+  task_types:
+    - implementation
+    - coding
+    - bugfix
+    - refactoring
+    - api_development
+    - feature_development
+  keywords:
+    - pattern: "(implement|code|build|create|develop)"
+    - pattern: "(fix|bug|issue|error|problem)"
+    - pattern: "(refactor|optimize|improve|enhance)"
+    - pattern: "(api|endpoint|service|function)"
+    - pattern: "(add|update|modify|change)"
+    - pattern: "(feature|functionality)"
+  expertise:
+    - "Full-stack development"
+    - "Code implementation"
+    - "Bug fixing"
+    - "Refactoring"
+  preferred_story_types:
+    - feature
+    - bugfix
+    - refactor
+  priority: 1
+
+qa:
+  name: "QA Engineer"
+  description: "Quality Assurance - 测试和代码审查"
+  task_types:
+    - testing
+    - review
+    - validation
+    - quality
+    - test_automation
+  keywords:
+    - pattern: "(test|testing|spec|verify|validate)"
+    - pattern: "(review|check|audit|inspect)"
+    - pattern: "(quality|coverage|assert|expect)"
+    - pattern: "(jest|mocha|pytest|cypress)"
+    - pattern: "(unit test|integration|e2e)"
+  expertise:
+    - "Test automation"
+    - "Code review"
+    - "Quality assurance"
+  preferred_story_types:
+    - test
+    - quality
+  priority: 2
+
+architect:
+  name: "Software Architect"
+  description: "架构师 - 系统设计和技术决策"
+  task_types:
+    - architecture
+    - design
+    - planning
+    - technical_decision
+    - system_design
+  keywords:
+    - pattern: "(architect|architecture|design|structure)"
+    - pattern: "(plan|roadmap|strategy|approach)"
+    - pattern: "(decide|choose|select|evaluate)"
+    - pattern: "(system|component|module|layer)"
+    - pattern: "(pattern|best practice|scalab)"
+  expertise:
+    - "System architecture"
+    - "Technical design"
+    - "Technology selection"
+    - "Scalability planning"
+  preferred_story_types:
+    - architecture
+    - spike
+  priority: 2
+
+pm:
+  name: "Product Manager"
+  description: "产品经理 - PRD 和产品规划"
+  task_types:
+    - planning
+    - requirements
+    - prd
+    - roadmap
+    - prioritization
+    - product_strategy
+  keywords:
+    - pattern: "(prd|requirement|spec|specification)"
+    - pattern: "(roadmap|plan|prioritize|scope)"
+    - pattern: "(epic|story|feature|backlog)"
+    - pattern: "(product|business|value|metric)"
+    - pattern: "(stakeholder|user|customer)"
+  expertise:
+    - "Product planning"
+    - "Requirements definition"
+    - "Stakeholder communication"
+    - "Roadmap creation"
+  preferred_story_types:
+    - prd
+    - epic
+  priority: 1
+
+po:
+  name: "Product Owner"
+  description: "Product Owner - Backlog 管理和 Story 创建"
+  task_types:
+    - backlog
+    - story_creation
+    - acceptance_criteria
+    - prioritization
+    - sprint_planning
+  keywords:
+    - pattern: "(story|backlog|acceptance|criteria)"
+    - pattern: "(prioritize|scope|value|effort)"
+    - pattern: "(sprint|release|iteration)"
+    - pattern: "(user story|task|subtask)"
+    - pattern: "(definition of done|dod)"
+  expertise:
+    - "Backlog management"
+    - "Story writing"
+    - "Sprint planning"
+    - "Acceptance criteria"
+  preferred_story_types:
+    - story
+  priority: 2
+
+sm:
+  name: "Scrum Master"
+  description: "Scrum Master - 流程协调和障碍移除"
+  task_types:
+    - facilitation
+    - coordination
+    - impediment_removal
+    - process
+    - ceremony
+  keywords:
+    - pattern: "(sprint|scrum|ceremony|standup)"
+    - pattern: "(coordinate|facilitate|blocker|impediment)"
+    - pattern: "(process|workflow|kanban|agile)"
+    - pattern: "(retrospective|review|planning)"
+    - pattern: "(team|velocity|capacity)"
+  expertise:
+    - "Sprint facilitation"
+    - "Process improvement"
+    - "Team coordination"
+    - "Impediment removal"
+  preferred_story_types:
+    - process
+  priority: 3
+
+analyst:
+  name: "Business Analyst"
+  description: "业务分析师 - 研究和分析"
+  task_types:
+    - research
+    - analysis
+    - documentation
+    - competitive_intelligence
+    - market_research
+  keywords:
+    - pattern: "(research|analyze|investigate|study)"
+    - pattern: "(market|competitor|benchmark|industry)"
+    - pattern: "(document|report|insight|finding)"
+    - pattern: "(data|metric|statistic|survey)"
+    - pattern: "(user research|interview|persona)"
+  expertise:
+    - "Market research"
+    - "Competitive analysis"
+    - "Data analysis"
+    - "Documentation"
+  preferred_story_types:
+    - research
+    - spike
+  priority: 2
+
+devops:
+  name: "DevOps Engineer"
+  description: "DevOps - CI/CD 和基础设施"
+  task_types:
+    - deployment
+    - ci_cd
+    - infrastructure
+    - monitoring
+    - automation
+  keywords:
+    - pattern: "(deploy|release|pipeline|build)"
+    - pattern: "(ci|cd|github actions|jenkins|circleci)"
+    - pattern: "(infra|infrastructure|cloud|aws|azure)"
+    - pattern: "(docker|kubernetes|container)"
+    - pattern: "(monitor|alert|log|observability)"
+  expertise:
+    - "CI/CD pipelines"
+    - "Infrastructure automation"
+    - "Monitoring and alerting"
+    - "Cloud deployment"
+  preferred_story_types:
+    - infrastructure
+    - deployment
+  priority: 2
+
+data_engineer:
+  name: "Data Engineer"
+  description: "数据工程师 - 数据库和迁移"
+  task_types:
+    - database
+    - migration
+    - schema
+    - query_optimization
+    - data_modeling
+  keywords:
+    - pattern: "(database|db|schema|migration)"
+    - pattern: "(sql|query|table|index|join)"
+    - pattern: "(data model|orm|prisma|sequelize)"
+    - pattern: "(postgresql|mysql|mongodb|redis)"
+    - pattern: "(backup|restore|replica)"
+  expertise:
+    - "Database design"
+    - "Query optimization"
+    - "Data modeling"
+    - "Database migrations"
+  preferred_story_types:
+    - database
+    - migration
+  priority: 2
+
+ux_design_expert:
+  name: "UX Designer"
+  description: "UX 设计师 - 用户体验和界面设计"
+  task_types:
+    - design
+    - ux
+    - ui
+    - user_research
+    - accessibility
+  keywords:
+    - pattern: "(design|ui|ux|interface|layout)"
+    - pattern: "(wireframe|prototype|mockup|figma)"
+    - pattern: "(user|experience|journey|flow)"
+    - pattern: "(accessibility|a11y|wcag)"
+    - pattern: "(visual|style|color|typography)"
+  expertise:
+    - "User experience design"
+    - "Interface design"
+    - "User research"
+    - "Accessibility"
+  preferred_story_types:
+    - design
+    - ux
+  priority: 2
+
+aios_master:
+  name: "AIOS Master"
+  description: "AIOS 框架专家 - 系统配置和纠正"
+  task_types:
+    - framework
+    - configuration
+    - correction
+    - system
+    - escalation
+  keywords:
+    - pattern: "(aios|framework|system|config)"
+    - pattern: "(correct|fix|reset|restore)"
+    - pattern: "(escalate|override|bypass)"
+    - pattern: "(setup|install|initialize)"
+  expertise:
+    - "AIOS framework"
+    - "System configuration"
+    - "Error correction"
+    - "Process escalation"
+  preferred_story_types:
+    - system
+  priority: 3

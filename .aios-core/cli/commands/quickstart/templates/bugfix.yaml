@@ -1,0 +1,101 @@
+# Bug Fix Quickstart Template
+# Template for starting bug fix workflow
+#
+# @story STORY-OPT-A2
+
+id: bugfix
+title: "Bug Fix"
+description: "Fix a bug or issue in your project"
+icon: "bug"
+estimatedTime: "15 min"
+
+steps:
+  # Step 1: Bug Description
+  - id: description
+    type: textarea
+    prompt: "Bug description"
+    placeholder: "Describe the bug: what happened vs what you expected..."
+    required: true
+    help: "Include steps to reproduce if possible"
+
+  # Step 2: Bug Severity
+  - id: severity
+    type: select
+    prompt: "Bug severity"
+    options:
+      - value: critical
+        label: "Critical - System down"
+        description: "Production is broken, no workaround"
+      - value: high
+        label: "High - Major impact"
+        description: "Significant functionality broken"
+      - value: medium
+        label: "Medium - Moderate impact"
+        description: "Feature partially broken, workaround exists"
+      - value: low
+        label: "Low - Minor issue"
+        description: "Cosmetic or minor inconvenience"
+    default: medium
+
+  # Step 3: Affected Component
+  - id: component
+    type: select
+    prompt: "Affected component"
+    options:
+      - value: api
+        label: "API/Backend"
+      - value: ui
+        label: "Frontend/UI"
+      - value: database
+        label: "Database"
+      - value: authentication
+        label: "Authentication"
+      - value: other
+        label: "Other"
+    default: other
+
+  # Step 4: Error Message
+  - id: error
+    type: input
+    prompt: "Error message or code (optional)"
+    placeholder: "e.g., CFG_001 or stack trace snippet"
+    required: false
+    help: "Include any error codes or messages you've seen"
+
+  # Step 5: Reproduction Steps
+  - id: reproduction
+    type: textarea
+    prompt: "Steps to reproduce (optional)"
+    placeholder: |
+      1. Go to...
+      2. Click on...
+      3. See error...
+    required: false
+
+actions:
+  - type: diagnose
+    description: "Run diagnostics if error code provided"
+
+  - type: create-story
+    template: bugfix-story.md
+    output: "docs/stories/active/BUG-{id}/story.md"
+
+  - type: suggest
+    commands:
+      - "aios diagnose {error-code} - Get detailed error analysis"
+      - "aios fix {error-code} - Attempt automatic fix"
+      - "@dev *fix - Request manual fix from developer agent"
+
+nextSteps:
+  - title: "Diagnose Issue"
+    description: "Get detailed analysis of the error"
+    command: "aios diagnose <error-code>"
+  - title: "Auto Fix"
+    description: "Try automatic fix if available"
+    command: "aios fix <error-code>"
+  - title: "Manual Fix"
+    description: "Request developer to fix manually"
+    command: "@dev"
+  - title: "Get Help"
+    description: "Discuss with team"
+    command: "@sm"

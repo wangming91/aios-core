@@ -1,0 +1,152 @@
+# First Run Tour Template
+# AIOS Quick Start Guide - 5 minute introduction
+#
+# @story STORY-OPT-A1
+
+id: first-run
+title: "Welcome to AIOS"
+description: "5-minute quick introduction to AIOS core features"
+estimatedTime: "5 min"
+version: "1.0.0"
+
+steps:
+  # Step 1: Welcome
+  - id: welcome
+    title: "Welcome"
+    type: info
+    content: |
+      Welcome to Synkra AIOS!
+
+      AIOS is an AI-driven development framework that helps you:
+        - Collaborate with specialized AI agents for development
+        - Follow story-driven development workflows
+        - Automate quality assurance
+
+      Let's spend 5 minutes understanding the core concepts.
+    action:
+      type: confirm
+      label: "Start Tutorial"
+
+  # Step 2: Agent System
+  - id: agents
+    title: "Agent System"
+    type: interactive
+    content: |
+      AIOS uses specialized AI agents for different tasks:
+
+      | Agent   | Role        | Use Case              |
+      |---------|-------------|-----------------------|
+      | @dev    | Developer   | Writing code          |
+      | @qa     | QA Engineer | Testing & review      |
+      | @architect | Architect | System design        |
+      | @pm     | Product Mgr | Requirements          |
+      | @devops | DevOps      | CI/CD & deployment    |
+
+      Activate an agent by typing @agent-name in your conversation.
+
+      Try it:
+    action:
+      type: command
+      command: "aios agents list"
+      label: "View All Agents"
+
+  # Step 3: Story-Driven Development
+  - id: stories
+    title: "Story-Driven Development"
+    type: interactive
+    content: |
+      AIOS organizes development through Stories:
+
+        - Stories are requirements documents in docs/stories/
+        - Each story has acceptance criteria and tasks
+        - Agents implement stories following the criteria
+
+      Story workflow:
+        1. @po creates a story
+        2. @dev implements the code
+        3. @qa writes tests
+        4. @devops deploys
+
+      View active stories:
+    action:
+      type: command
+      command: "aios story list"
+      label: "View Active Stories"
+
+  # Step 4: CLI Commands
+  - id: commands
+    title: "CLI Commands"
+    type: interactive
+    content: |
+      AIOS provides powerful CLI commands:
+
+      Essential commands:
+        aios install      - Initialize AIOS in a project
+        aios doctor       - Diagnose system issues
+        aios validate     - Validate configuration
+        aios config       - Manage configuration
+        aios tour         - Start this tutorial
+
+      Get help anytime:
+    action:
+      type: command
+      command: "aios --help"
+      label: "View All Commands"
+
+  # Step 5: Quality Gates
+  - id: quality
+    title: "Quality Gates"
+    type: interactive
+    content: |
+      AIOS enforces quality through automated gates:
+
+        - Lint checks (ESLint)
+        - Type checks (TypeScript)
+        - Unit tests (Jest)
+        - Integration tests
+
+      Run quality checks before pushing:
+    action:
+      type: command
+      command: "npm run lint && npm test"
+      label: "Run Quality Checks"
+
+  # Step 6: Configuration
+  - id: config
+    title: "Configuration"
+    type: interactive
+    content: |
+      AIOS uses layered configuration:
+
+        L1 Framework - .aios-core/framework-config.yaml
+        L2 Project   - .aios-core/project-config.yaml
+        L4 Local     - .aios-core/local-config.yaml
+        L5 User      - ~/.aios/user-config.yaml
+
+      View your current configuration:
+    action:
+      type: command
+      command: "aios config --show"
+      label: "View Configuration"
+
+  # Step 7: Complete
+  - id: complete
+    title: "Tutorial Complete!"
+    type: complete
+    content: |
+      Congratulations! You've completed the AIOS quick start.
+
+      What you learned:
+        - How to activate AI agents
+        - Story-driven development workflow
+        - Essential CLI commands
+        - Quality gates
+        - Configuration system
+
+      Next steps:
+        - View aios --help for all commands
+        - Run aios quickstart to start your first task
+        - Check docs/stories/ for development stories
+        - Read .aios-core/constitution.md for principles
+
+      Happy coding with AIOS!

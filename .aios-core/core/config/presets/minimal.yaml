@@ -1,0 +1,74 @@
+# ============================================
+# AIOS Preset: Minimal
+# ============================================
+# Minimal configuration for simple projects
+# Recommended for: Small projects, prototypes, learning
+#
+# @story STORY-OPT-A3
+# ============================================
+
+id: minimal
+name: "Minimal"
+description: "Minimal configuration for simple projects"
+version: "1.0.0"
+
+# Detection rules for auto-suggestion
+detection:
+  language: any
+  framework: none
+  patterns:
+    - "Simple project structure"
+    - "No complex framework dependencies"
+
+# Configuration to apply
+config:
+  # IDE Configuration
+  ide: claude-code
+
+  # Agent team configuration (minimal)
+  agentTeam: minimal
+
+  # MCP servers (minimal)
+  mcpServers: minimal
+
+  # Workflow style
+  workflow: simple
+
+  # Files to always load for @dev context
+  devLoadAlwaysFiles:
+    - "README.md"
+    - "docs/**/*.md"
+
+  # Testing configuration (optional)
+  testing:
+    framework: none
+    coverageThreshold: 0
+
+  # Quality tools (minimal)
+  quality:
+    lint: none
+    format: none
+
+  # Documentation paths
+  documentation:
+    storiesDir: "docs/stories"
+    architectureDir: "docs"
+
+# Next steps after applying preset
+nextSteps:
+  - title: "Explore AIOS commands"
+    command: "aios --help"
+  - title: "Start the interactive tour"
+    command: "aios tour first-run"
+  - title: "Create your first story"
+    command: "aios quickstart feature"
+  - title: "Run AIOS doctor to validate"
+    command: "aios doctor"
+
+# Notes about this preset
+notes:
+  - "Best for getting started quickly"
+  - "No testing framework required"
+  - "No linting/formatting configured"
+  - "Minimal agent team for simple tasks"
+  - "Can be upgraded later with 'aios config wizard'"

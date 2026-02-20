@@ -1,0 +1,292 @@
+# AIOS Error Codes Definition
+# Version: 1.0.0
+# Last Updated: 2026-02-20
+#
+# This file defines all error codes used in AIOS.
+# Each error code includes:
+# - code: Unique identifier (e.g., CFG_001)
+# - category: Error category for classification
+# - severity: CRITICAL | ERROR | WARNING | INFO
+# - message: Technical error message (supports {variable} interpolation)
+# - userMessage: User-friendly message (supports {variable} interpolation)
+# - recoverable: Whether the error can be recovered from
+# - recoverySteps: List of steps to resolve the error
+# - docUrl: Optional URL to documentation
+
+metadata:
+  version: "1.0.0"
+  lastUpdated: "2026-02-20"
+  description: "AIOS Error Codes Definition File"
+
+# Error Categories
+categories:
+  CFG:
+    name: "Configuration"
+    description: "Configuration related errors"
+    prefix: "CFG"
+  AGT:
+    name: "Agent"
+    description: "Agent related errors"
+    prefix: "AGT"
+  STR:
+    name: "Story"
+    description: "Story management errors"
+    prefix: "STR"
+  SYS:
+    name: "System"
+    description: "System-level errors"
+    prefix: "SYS"
+  IDS:
+    name: "IDS"
+    description: "Incremental Decision System errors"
+    prefix: "IDS"
+  GEN:
+    name: "General"
+    description: "General errors"
+    prefix: "GEN"
+
+# Error Code Definitions
+codes:
+  # ===========================================
+  # CONFIGURATION ERRORS (CFG_xxx)
+  # ===========================================
+
+  CFG_001:
+    code: "CFG_001"
+    category: "CONFIG"
+    severity: "ERROR"
+    message: "Configuration file not found"
+    userMessage: "Configuration file not found"
+    recoverable: true
+    recoverySteps:
+      - "Run 'aios config init' to create default configuration"
+      - "Check if the configuration file path is correct"
+      - "Verify the file has not been accidentally deleted"
+    docUrl: "https://docs.aios.dev/errors/CFG_001"
+
+  CFG_002:
+    code: "CFG_002"
+    category: "CONFIG"
+    severity: "ERROR"
+    message: "Invalid configuration value for {field}"
+    userMessage: "Invalid configuration value for field '{field}'"
+    recoverable: true
+    recoverySteps:
+      - "Check the value of field '{field}' in configuration"
+      - "Refer to documentation for valid values"
+      - "Run 'aios config validate' to check all configuration"
+    docUrl: "https://docs.aios.dev/errors/CFG_002"
+
+  CFG_003:
+    code: "CFG_003"
+    category: "CONFIG"
+    severity: "ERROR"
+    message: "Configuration parse error in {file}"
+    userMessage: "Failed to parse configuration file '{file}'"
+    recoverable: true
+    recoverySteps:
+      - "Check YAML/JSON syntax in '{file}'"
+      - "Use a YAML/JSON linter to validate the file"
+      - "Compare with default configuration template"
+    docUrl: "https://docs.aios.dev/errors/CFG_003"
+
+  CFG_004:
+    code: "CFG_004"
+    category: "CONFIG"
+    severity: "WARNING"
+    message: "Missing recommended configuration: {field}"
+    userMessage: "Recommended configuration field '{field}' is missing"
+    recoverable: true
+    recoverySteps:
+      - "Consider adding '{field}' to your configuration"
+      - "Run 'aios config init' to see all available options"
+    docUrl: "https://docs.aios.dev/errors/CFG_004"
+
+  # ===========================================
+  # AGENT ERRORS (AGT_xxx)
+  # ===========================================
+
+  AGT_001:
+    code: "AGT_001"
+    category: "AGENT"
+    severity: "ERROR"
+    message: "Agent '{agentName}' not found"
+    userMessage: "Agent '{agentName}' does not exist"
+    recoverable: false
+    recoverySteps:
+      - "Check the agent name spelling"
+      - "Run 'aios agents list' to see available agents"
+      - "Check if the agent has been properly installed"
+    docUrl: "https://docs.aios.dev/errors/AGT_001"
+
+  AGT_002:
+    code: "AGT_002"
+    category: "AGENT"
+    severity: "ERROR"
+    message: "Agent '{agentName}' activation failed: {reason}"
+    userMessage: "Failed to activate agent '{agentName}'"
+    recoverable: true
+    recoverySteps:
+      - "Check the error reason: {reason}"
+      - "Verify agent configuration is valid"
+      - "Try reactivating the agent"
+      - "Check AIOS logs for detailed error information"
+    docUrl: "https://docs.aios.dev/errors/AGT_002"
+
+  AGT_003:
+    code: "AGT_003"
+    category: "AGENT"
+    severity: "WARNING"
+    message: "Agent '{agentName}' task timeout after {seconds}s"
+    userMessage: "Agent '{agentName}' task took too long and was stopped"
+    recoverable: true
+    recoverySteps:
+      - "Increase task timeout in configuration"
+      - "Check if the task is stuck"
+      - "Try running the task again"
+    docUrl: "https://docs.aios.dev/errors/AGT_003"
+
+  # ===========================================
+  # STORY ERRORS (STR_xxx)
+  # ===========================================
+
+  STR_001:
+    code: "STR_001"
+    category: "STORY"
+    severity: "ERROR"
+    message: "Story '{storyId}' not found"
+    userMessage: "Story '{storyId}' does not exist"
+    recoverable: false
+    recoverySteps:
+      - "Check the story ID is correct"
+      - "Run 'aios stories list' to see available stories"
+      - "Create the story if it doesn't exist"
+    docUrl: "https://docs.aios.dev/errors/STR_001"
+
+  STR_002:
+    code: "STR_002"
+    category: "STORY"
+    severity: "ERROR"
+    message: "Invalid story status transition from {from} to {to}"
+    userMessage: "Cannot change story status from '{from}' to '{to}'"
+    recoverable: true
+    recoverySteps:
+      - "Check valid status transitions"
+      - "Ensure the story is in the expected state"
+      - "Use 'aios story status' to check current status"
+    docUrl: "https://docs.aios.dev/errors/STR_002"
+
+  STR_003:
+    code: "STR_003"
+    category: "STORY"
+    severity: "WARNING"
+    message: "Story '{storyId}' has incomplete tasks"
+    userMessage: "Story '{storyId}' still has tasks to complete"
+    recoverable: true
+    recoverySteps:
+      - "Complete remaining tasks before marking story as done"
+      - "Use 'aios story tasks' to see pending tasks"
+    docUrl: "https://docs.aios.dev/errors/STR_003"
+
+  # ===========================================
+  # SYSTEM ERRORS (SYS_xxx)
+  # ===========================================
+
+  SYS_001:
+    code: "SYS_001"
+    category: "SYSTEM"
+    severity: "CRITICAL"
+    message: "System resource exhausted: {resource}"
+    userMessage: "System ran out of {resource}"
+    recoverable: false
+    recoverySteps:
+      - "Free up system resources"
+      - "Close unnecessary applications"
+      - "Restart AIOS"
+    docUrl: "https://docs.aios.dev/errors/SYS_001"
+
+  SYS_002:
+    code: "SYS_002"
+    category: "SYSTEM"
+    severity: "ERROR"
+    message: "Permission denied for {operation}"
+    userMessage: "Not authorized to perform '{operation}'"
+    recoverable: true
+    recoverySteps:
+      - "Check file/directory permissions"
+      - "Run with appropriate privileges if needed"
+      - "Ensure you have access to the resource"
+    docUrl: "https://docs.aios.dev/errors/SYS_002"
+
+  SYS_003:
+    code: "SYS_003"
+    category: "SYSTEM"
+    severity: "ERROR"
+    message: "AIOS installation corrupted: {component}"
+    userMessage: "AIOS installation is corrupted"
+    recoverable: true
+    recoverySteps:
+      - "Run 'aios doctor' to diagnose issues"
+      - "Reinstall AIOS if necessary"
+      - "Check {component} for missing files"
+    docUrl: "https://docs.aios.dev/errors/SYS_003"
+
+  # ===========================================
+  # IDS ERRORS (IDS_xxx)
+  # ===========================================
+
+  IDS_001:
+    code: "IDS_001"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Decision conflict detected for {entity}"
+    userMessage: "Conflicting decisions found for '{entity}'"
+    recoverable: true
+    recoverySteps:
+      - "Review existing decisions for '{entity}'"
+      - "Resolve conflicts manually"
+      - "Run 'aios ids validate' to check for conflicts"
+    docUrl: "https://docs.aios.dev/errors/IDS_001"
+
+  IDS_002:
+    code: "IDS_002"
+    category: "IDS"
+    severity: "WARNING"
+    message: "Decision threshold exceeded for {metric}"
+    userMessage: "Decision threshold exceeded for '{metric}'"
+    recoverable: true
+    recoverySteps:
+      - "Review decisions that triggered this threshold"
+      - "Adjust threshold if appropriate"
+      - "Check if behavior is expected"
+    docUrl: "https://docs.aios.dev/errors/IDS_002"
+
+  IDS_003:
+    code: "IDS_003"
+    category: "IDS"
+    severity: "ERROR"
+    message: "IDS registry corruption detected"
+    userMessage: "Decision registry is corrupted"
+    recoverable: true
+    recoverySteps:
+      - "Run 'aios ids heal' to attempt automatic repair"
+      - "Check registry file for corruption"
+      - "Restore from backup if available"
+    docUrl: "https://docs.aios.dev/errors/IDS_003"
+
+  # ===========================================
+  # GENERAL ERRORS (GEN_xxx)
+  # ===========================================
+
+  GEN_001:
+    code: "GEN_001"
+    category: "GENERAL"
+    severity: "ERROR"
+    message: "Unknown error occurred"
+    userMessage: "An unexpected error occurred"
+    recoverable: false
+    recoverySteps:
+      - "Try the operation again"
+      - "Check AIOS logs for details"
+      - "Report the issue if problem persists"
+    docUrl: null

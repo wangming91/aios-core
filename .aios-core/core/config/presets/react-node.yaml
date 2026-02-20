@@ -1,0 +1,87 @@
+# ============================================
+# AIOS Preset: React + Node.js
+# ============================================
+# Full-stack React application with Node.js backend
+# Recommended for: Modern web applications with React frontend
+#
+# @story STORY-OPT-A3
+# ============================================
+
+id: react-node
+name: "React + Node.js"
+description: "Full-stack React application with Node.js backend"
+version: "1.0.0"
+
+# Detection rules for auto-suggestion
+detection:
+  language: nodejs
+  framework:
+    - react
+    - express
+  patterns:
+    - "package.json with react dependency"
+    - "src/ directory with .tsx/.jsx files"
+
+# Configuration to apply
+config:
+  # IDE Configuration
+  ide: claude-code
+
+  # Agent team configuration
+  agentTeam: fullstack
+
+  # MCP servers (minimal by default)
+  mcpServers: minimal
+
+  # Workflow style
+  workflow: agile
+
+  # Files to always load for @dev context
+  devLoadAlwaysFiles:
+    - "docs/prd/**/*.md"
+    - "docs/architecture/**/*.md"
+    - "src/**/*.ts"
+    - "src/**/*.tsx"
+    - "src/**/*.js"
+    - "src/**/*.jsx"
+    - "src/**/*.css"
+    - "src/**/*.scss"
+
+  # Testing configuration
+  testing:
+    framework: jest
+    coverageThreshold: 80
+    testPattern:
+      - "**/*.test.ts"
+      - "**/*.test.tsx"
+      - "**/*.spec.ts"
+      - "**/*.spec.tsx"
+
+  # Quality tools
+  quality:
+    lint: eslint
+    format: prettier
+    typeCheck: typescript
+
+  # Documentation paths
+  documentation:
+    storiesDir: "docs/stories"
+    architectureDir: "docs/architecture"
+
+# Next steps after applying preset
+nextSteps:
+  - title: "Install dependencies"
+    command: "npm install"
+  - title: "Start development server"
+    command: "npm run dev"
+  - title: "Create your first story"
+    command: "aios quickstart feature"
+  - title: "Run AIOS doctor to validate"
+    command: "aios doctor"
+
+# Notes about this preset
+notes:
+  - "Expects TypeScript (tsconfig.json)"
+  - "Configured for Jest testing"
+  - "ESLint + Prettier for code quality"
+  - "Full-stack agent team with frontend + backend support"
