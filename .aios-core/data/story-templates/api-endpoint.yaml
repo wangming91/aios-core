@@ -1,0 +1,92 @@
+# Story Template: API Endpoint
+# Use for: REST API endpoints, GraphQL resolvers, services
+
+template:
+  id: api-endpoint
+  name: API Endpoint
+  category: backend
+  estimated_points: 3-8
+  typical_duration: 0.5-2 days
+  tags: [api, rest, endpoint, backend, service]
+
+executor_assignment:
+  executor: "@dev"
+  quality_gate: "@architect"
+  quality_gate_tools:
+    - api_design_review
+    - security_scan
+    - performance_test
+
+story_pattern: |
+  **As a** {{client_type}},
+  **I want** to {{api_action}} via {{http_method}} {{endpoint_path}},
+  **so that** {{business_value}}.
+
+acceptance_criteria_template:
+  - "[ ] Endpoint responds to {{http_method}} {{endpoint_path}}"
+  - "[ ] Request validation returns 400 for invalid input"
+  - "[ ] Successful response returns {{success_response}}"
+  - "[ ] Authentication/authorization implemented"
+  - "[ ] Error responses follow API error standards"
+  - "[ ] API documentation updated"
+
+tasks_template:
+  - "[ ] Design request/response schema"
+  - "[ ] Implement route handler"
+  - "[ ] Add input validation"
+  - "[ ] Implement business logic"
+  - "[ ] Add authentication/authorization"
+  - "[ ] Implement error handling"
+  - "[ ] Write unit tests"
+  - "[ ] Write integration tests"
+  - "[ ] Update API documentation"
+
+dev_notes_template:
+  api_standards: |
+    **REST Endpoint Pattern:**
+    - GET /resource - List resources
+    - GET /resource/:id - Get single resource
+    - POST /resource - Create resource
+    - PUT /resource/:id - Update resource
+    - DELETE /resource/:id - Delete resource
+
+    **Response Format:**
+    ```json
+    {
+      "success": true,
+      "data": {},
+      "error": null
+    }
+    ```
+
+    **Error Response:**
+    ```json
+    {
+      "success": false,
+      "data": null,
+      "error": {
+        "code": "ERROR_CODE",
+        "message": "Human readable message"
+      }
+    }
+    ```
+
+  testing_standards:
+    - "Unit tests for handler logic"
+    - "Integration tests with mock database"
+    - "Test all error scenarios"
+    - "Verify authentication/authorization"
+
+placeholders:
+  client_type:
+    description: "Who consumes the API"
+    examples: ["frontend application", "mobile app", "third-party integration"]
+  api_action:
+    description: "What the API does"
+    examples: ["create a new user", "fetch product list", "update settings"]
+  http_method:
+    description: "HTTP method"
+    examples: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+  endpoint_path:
+    description: "API endpoint path"
+    examples: ["/api/users", "/api/products/:id", "/api/settings"]

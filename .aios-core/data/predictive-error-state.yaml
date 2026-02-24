@@ -1,0 +1,73 @@
+version: 1.0.0
+sessionStartedAt: '2026-02-24T07:57:36.136Z'
+errorHistory:
+  - timestamp: '2026-02-24T07:57:46.876Z'
+    message: Cannot find module 'missing-package'
+    stack: |-
+      Error: Cannot find module 'missing-package'
+          at Command.recordError (/Users/cc/projects/aios-core/bin/commands/predict.js:126:17)
+          at Command.listener [as _actionHandler] (/Users/cc/projects/aios-core/node_modules/commander/lib/command.js:542:17)
+          at /Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1502:14
+          at Command._chainOrCall (/Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1386:12)
+          at Command._parseCommand (/Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1501:27)
+          at /Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1265:27
+          at Command._chainOrCall (/Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1386:12)
+          at Command._dispatchSubcommand (/Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1261:25)
+          at Command._parseCommand (/Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1457:19)
+          at Command.parse (/Users/cc/projects/aios-core/node_modules/commander/lib/command.js:1064:10)
+    category: dependency
+    pattern: IMPORT_ERROR
+    autoFix: Check if package is installed and import path is correct
+    context:
+      manual: true
+      category: unknown
+riskAssessments:
+  - timestamp: '2026-02-24T07:57:36.138Z'
+    riskLevel: medium
+    totalScore: 19
+    risks:
+      - id: uncommitted_changes
+        name: Uncommitted Changes
+        category: code
+        severity: medium
+        description: Working directory has uncommitted changes
+        prediction: May cause merge conflicts or lost work
+        suggestion: Consider committing changes before continuing
+        weight: 5
+        detectedAt: '2026-02-24T07:57:36.138Z'
+        details: Working directory has uncommitted files
+      - id: large_diff
+        name: Large Diff
+        category: code
+        severity: medium
+        description: Changes exceed recommended size (500+ lines)
+        prediction: Higher chance of bugs and review fatigue
+        suggestion: Consider breaking into smaller commits
+        weight: 6
+        detectedAt: '2026-02-24T07:57:36.138Z'
+        details: 600 lines changed
+      - id: missing_tests
+        name: Missing Tests
+        category: code
+        severity: high
+        description: Code changes without corresponding tests
+        prediction: Untested code is more likely to have bugs
+        suggestion: Add tests for new functionality
+        weight: 8
+        detectedAt: '2026-02-24T07:57:36.138Z'
+        details: 5 source files without tests
+    recommendations:
+      - priority: high
+        risk: Missing Tests
+        suggestion: Add tests for new functionality
+        prediction: Untested code is more likely to have bugs
+      - priority: medium
+        risk: Uncommitted Changes
+        suggestion: Consider committing changes before continuing
+        prediction: May cause merge conflicts or lost work
+      - priority: medium
+        risk: Large Diff
+        suggestion: Consider breaking into smaller commits
+        prediction: Higher chance of bugs and review fatigue
+patterns:
+  IMPORT_ERROR: 1

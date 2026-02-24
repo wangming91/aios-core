@@ -1,0 +1,104 @@
+# Story Templates Index
+# Quick reference for all available story templates
+
+version: 1.0.0
+created: 2026-02-24
+author: "@pm (Morgan)"
+
+templates:
+  # Development Templates
+  feature:
+    id: feature-story
+    name: Feature Implementation
+    file: feature.yaml
+    use_when: "Adding new functionality or features"
+    typical_points: 5-13
+    typical_duration: 1-3 days
+
+  api-endpoint:
+    id: api-endpoint
+    name: API Endpoint
+    file: api-endpoint.yaml
+    use_when: "Creating REST API endpoints or GraphQL resolvers"
+    typical_points: 3-8
+    typical_duration: 0.5-2 days
+
+  ui-component:
+    id: ui-component
+    name: UI Component
+    file: ui-component.yaml
+    use_when: "Building React components or UI elements"
+    typical_points: 3-8
+    typical_duration: 0.5-2 days
+
+  # Maintenance Templates
+  bugfix:
+    id: bugfix-story
+    name: Bug Fix
+    file: bugfix.yaml
+    use_when: "Fixing bugs or resolving issues"
+    typical_points: 1-5
+    typical_duration: 0.5-1 day
+
+  refactoring:
+    id: refactoring
+    name: Refactoring
+    file: refactoring.yaml
+    use_when: "Improving code quality without changing behavior"
+    typical_points: 3-8
+    typical_duration: 0.5-2 days
+
+  # Database Templates
+  database-migration:
+    id: database-migration
+    name: Database Migration
+    file: database-migration.yaml
+    use_when: "Schema changes, migrations, or RLS policy updates"
+    typical_points: 3-8
+    typical_duration: 0.5-2 days
+
+  # Security Templates
+  security-fix:
+    id: security-fix
+    name: Security Fix
+    file: security-fix.yaml
+    use_when: "Addressing security vulnerabilities"
+    typical_points: 3-8
+    typical_duration: 0.5-2 days
+    priority: critical
+
+# Usage Instructions
+usage: |
+  To use a template, reference it when creating a story:
+
+  1. Via @sm agent:
+     *create-story --template feature
+
+  2. Via CLI:
+     aios story create --template bugfix
+
+  3. Templates are located at:
+     .aios-core/data/story-templates/{template}.yaml
+
+# Quick Selection Guide
+selection_guide:
+  - question: "Are you adding new functionality?"
+    template: feature
+
+  - question: "Are you fixing a bug or error?"
+    template: bugfix
+
+  - question: "Are you creating an API?"
+    template: api-endpoint
+
+  - question: "Are you building a UI component?"
+    template: ui-component
+
+  - question: "Are you changing the database?"
+    template: database-migration
+
+  - question: "Are you addressing a security issue?"
+    template: security-fix
+
+  - question: "Are you improving code without changing behavior?"
+    template: refactoring

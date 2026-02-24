@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 4.2.13
-generated_at: "2026-02-20T14:31:40.292Z"
+generated_at: "2026-02-24T08:31:00.299Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1055
+file_count: 1069
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:7676d49d7d075dd37bcb24729d86d6800b8517dd377ac28ccf541767feab7103
@@ -1240,10 +1240,50 @@ files:
     hash: sha256:57b54b8176ab426d8562bc8f96c7912c45c5fbe95a74f00219508ef8e897713d
     type: data
     size: 303924
+  - path: data/first-value-state.yaml
+    hash: sha256:70e0fad615606b3e2937ccc8a46d144adf7e941775afe2c5bdfdea96b7689088
+    type: data
+    size: 619
   - path: data/learned-patterns.yaml
     hash: sha256:24ac0b160615583a0ff783d3da8af80b7f94191575d6db2054ec8e10a3f945dc
     type: data
     size: 68
+  - path: data/predictive-error-state.yaml
+    hash: sha256:21fc622be83392e1dfedb09d8b0b736232c1deff4e7e6823e883c42f82377060
+    type: data
+    size: 3344
+  - path: data/story-templates/api-endpoint.yaml
+    hash: sha256:bc7ded9dc8a535e31168f556deb703c7a6398dcb6f3130f3ea5060fb55336cb4
+    type: data
+    size: 2540
+  - path: data/story-templates/bugfix.yaml
+    hash: sha256:45248c0aae5cbcf151123764ba599f025d9a342bdbd034b80b691c5cdddc26fe
+    type: data
+    size: 2014
+  - path: data/story-templates/database-migration.yaml
+    hash: sha256:74db409829ac157424d08e62d9c79e344fb141ee8adb11caf186c7ffd7171f6c
+    type: data
+    size: 2308
+  - path: data/story-templates/feature.yaml
+    hash: sha256:a2fe275671cd604d0cc10b5c9990835eeda90c1f669389ab291ab7679f18c4db
+    type: data
+    size: 2347
+  - path: data/story-templates/INDEX.yaml
+    hash: sha256:a930ef27ed09bb6f9e4e293b23a6235b5d975e52448f55bbf76f94ebd9763231
+    type: data
+    size: 2569
+  - path: data/story-templates/refactoring.yaml
+    hash: sha256:f2503e6e24cd901e96b636a627f2612b8e03a04da914948c1babed8312e5c477
+    type: data
+    size: 2497
+  - path: data/story-templates/security-fix.yaml
+    hash: sha256:3192e614e923b203b6623533c66f4d358e61f2f6b384b95449d22d70b595de4e
+    type: data
+    size: 2301
+  - path: data/story-templates/ui-component.yaml
+    hash: sha256:2d03e91ef6fc785cbd85cfd3e60e5a70eeee2522ef969f7569c08eb177dbb564
+    type: data
+    size: 2364
   - path: data/tech-presets/_template.md
     hash: sha256:1a7262912c8c8e264d307f0d38a1109bdb2b9bff9ea7d8855c768835201aa59b
     type: data
@@ -1317,9 +1357,9 @@ files:
     type: agent
     size: 12765
   - path: development/agents/qa.md
-    hash: sha256:0f8fb4bce7c75852937bc822547ce74735b212c16761b2d58d95356708fd0a14
+    hash: sha256:3c4126ccc84b82e782d198980497ec352e969093ac8ca11513346b2852c3bc11
     type: agent
-    size: 17391
+    size: 17394
   - path: development/agents/sm.md
     hash: sha256:0f0a8171a68035594ef5dfc5f3e611e6a16198b3c3cc116b98c34d38ef2045ad
     type: agent
@@ -1452,6 +1492,14 @@ files:
     hash: sha256:4385acbfd7c184a38e123f7a20b5e7b06c1d89d645a6e1bae1c5e0e4232d5181
     type: script
     size: 8111
+  - path: development/scripts/first-value-detector.js
+    hash: sha256:26bf44b983f70817423dbf7721ab64c8fdefb55cefb6a6c6d4076b041151871c
+    type: script
+    size: 12553
+  - path: development/scripts/flow-state-engine.js
+    hash: sha256:00fa78ed550b582520f440ab1d59c153dd85d01308d50da1e09f95066ac6a4f8
+    type: script
+    size: 18645
   - path: development/scripts/generate-greeting.js
     hash: sha256:49b857fe36a0216a0df8395a6847f14608bd6a228817276201d22598a6862a4f
     type: script
@@ -1472,6 +1520,10 @@ files:
     hash: sha256:8155920904d4d8b9e9c5eac09732ad86639b0303e077725f2692e90c28715492
     type: script
     size: 5166
+  - path: development/scripts/handoff-visualizer.js
+    hash: sha256:53edfa296301da75d959da00da0ffa0444cb4e5a46b5fd4eba16d742f3481398
+    type: script
+    size: 9726
   - path: development/scripts/manifest-preview.js
     hash: sha256:caccc28155efee736533622e3bc62c67abb9721e1f4e9bf761ef02f8d8a37026
     type: script
@@ -1500,6 +1552,10 @@ files:
     hash: sha256:836f1261d296a949eb0c6d2e754afc1115854a39cff8927c82c6efd6fd693290
     type: script
     size: 8388
+  - path: development/scripts/predictive-error-detector.js
+    hash: sha256:c77ff44baecf6e0c5f4c804dfff40b3e60965718ff60b47ee27956b8c5915753
+    type: script
+    size: 19339
   - path: development/scripts/refactoring-suggester.js
     hash: sha256:d5183f79fae9dc4bf4d3c9136b3622e43a63643a7df622742c350931e45f18f4
     type: script

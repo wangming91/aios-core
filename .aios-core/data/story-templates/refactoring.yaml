@@ -1,0 +1,83 @@
+# Story Template: Refactoring
+# Use for: Code improvements, technical debt, performance optimization
+
+template:
+  id: refactoring
+  name: Refactoring
+  category: maintenance
+  estimated_points: 3-8
+  typical_duration: 0.5-2 days
+  tags: [refactoring, technical-debt, optimization, cleanup]
+
+executor_assignment:
+  executor: "@dev"
+  quality_gate: "@architect"
+  quality_gate_tools:
+    - code_review
+    - performance_benchmark
+    - test_coverage_check
+
+story_pattern: |
+  **As a** {{stakeholder}},
+  **I want** {{component}} to be refactored to {{improvement}},
+  **so that** {{benefit}}.
+
+acceptance_criteria_template:
+  - "[ ] Code follows project coding standards"
+  - "[ ] All existing tests pass"
+  - "[ ] Test coverage maintained or improved"
+  - "[ ] No functional changes to user-facing behavior"
+  - "[ ] Performance improved (if applicable)"
+  - "[ ] Documentation updated"
+
+tasks_template:
+  - "[ ] Analyze current implementation"
+  - "[ ] Design refactoring approach"
+  - "[ ] Write characterization tests (if needed)"
+  - "[ ] Implement refactoring in small steps"
+  - "[ ] Run tests after each step"
+  - "[ ] Update documentation"
+  - "[ ] Verify performance improvement"
+
+dev_notes_template:
+  refactoring_principles: |
+    **Refactoring Rules:**
+    1. Make small, incremental changes
+    2. Run tests after each change
+    3. Keep functional behavior unchanged
+    4. Document the "why" not just the "what"
+
+    **Common Refactoring Patterns:**
+    - Extract Method
+    - Extract Variable
+    - Rename Variable/Method
+    - Replace Magic Numbers
+    - Decompose Conditional
+    - Consolidate Duplicate
+
+  testing_standards: |
+    **Before Refactoring:**
+    - Ensure adequate test coverage
+    - Add characterization tests if needed
+    - Document current behavior
+
+    **During Refactoring:**
+    - Run tests after each change
+    - Use version control for easy rollback
+    - Keep changes small and focused
+
+    **After Refactoring:**
+    - All tests pass
+    - Coverage maintained or improved
+    - Performance benchmarks met
+
+placeholders:
+  component:
+    description: "What code/module is being refactored"
+    examples: ["UserService", "data processing pipeline", "authentication module"]
+  improvement:
+    description: "What improvement is being made"
+    examples: ["reduce complexity", "improve performance", "follow DRY principle"]
+  benefit:
+    description: "What benefit this brings"
+    examples: ["easier maintenance", "faster execution", "better testability"]

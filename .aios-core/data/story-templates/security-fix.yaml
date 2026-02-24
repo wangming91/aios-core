@@ -1,0 +1,76 @@
+# Story Template: Security Fix
+# Use for: Security vulnerabilities, authentication issues, data protection
+
+template:
+  id: security-fix
+  name: Security Fix
+  category: security
+  estimated_points: 3-8
+  typical_duration: 0.5-2 days
+  priority: critical
+  tags: [security, vulnerability, cwe, owasp]
+
+executor_assignment:
+  executor: "@dev"
+  quality_gate: "@architect"
+  quality_gate_tools:
+    - security_scan
+    - penetration_test
+    - code_review
+
+story_pattern: |
+  **As a** security-conscious {{stakeholder}},
+  **I want** {{vulnerability}} to be fixed,
+  **so that** {{risk_mitigation}}.
+
+acceptance_criteria_template:
+  - "[ ] Vulnerability identified and documented (CVE/CWE)"
+  - "[ ] Root cause analysis completed"
+  - "[ ] Fix implemented following security best practices"
+  - "[ ] Security scan passes with no findings"
+  - "[ ] Penetration test verifies fix"
+  - "[ ] Security documentation updated"
+
+tasks_template:
+  - "[ ] Document vulnerability details"
+  - "[ ] Perform root cause analysis"
+  - "[ ] Implement security fix"
+  - "[ ] Add security tests"
+  - "[ ] Run security scan"
+  - "[ ] Update security documentation"
+  - "[ ] Add to security changelog"
+
+dev_notes_template:
+  security_standards: |
+    **OWASP Top 10 Checklist:**
+    - [ ] A01: Broken Access Control
+    - [ ] A02: Cryptographic Failures
+    - [ ] A03: Injection
+    - [ ] A04: Insecure Design
+    - [ ] A05: Security Misconfiguration
+    - [ ] A06: Vulnerable Components
+    - [ ] A07: Auth Failures
+    - [ ] A08: Software/Data Integrity
+    - [ ] A09: Logging Failures
+    - [ ] A10: SSRF
+
+    **Security Testing:**
+    - Input validation tests
+    - Authentication bypass tests
+    - Authorization tests
+    - Session management tests
+
+  common_fixes: |
+    **SQL Injection:** Use parameterized queries
+    **XSS:** Sanitize/escape user input
+    **CSRF:** Implement CSRF tokens
+    **Auth:** Use secure session management
+    **Secrets:** Use environment variables, never commit
+
+placeholders:
+  vulnerability:
+    description: "Type of security vulnerability"
+    examples: ["SQL injection in search", "XSS in comments", "authentication bypass"]
+  risk_mitigation:
+    description: "What risk is being addressed"
+    examples: ["prevent data breaches", "protect user data", "ensure system integrity"]

@@ -194,7 +194,7 @@ dependencies:
   tasks:
     - qa-create-fix-request.md
     - qa-generate-tests.md
-    - manage-story-backlog.md
+    - qa-backlog-add-followup.md
     - qa-nfr-assess.md
     - qa-gate.md
     - qa-review-build.md

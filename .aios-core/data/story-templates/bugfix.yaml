@@ -1,0 +1,69 @@
+# Story Template: Bug Fix
+# Use for: Bug fixes, issue resolution, error corrections
+
+template:
+  id: bugfix-story
+  name: Bug Fix
+  category: maintenance
+  estimated_points: 1-5
+  typical_duration: 0.5-1 day
+  tags: [bug, fix, maintenance, issue]
+
+executor_assignment:
+  executor: "@dev"
+  quality_gate: "@qa"
+  quality_gate_tools:
+    - regression_test
+    - edge_case_validation
+    - root_cause_analysis
+
+story_pattern: |
+  **As a** {{user_role}},
+  **I want** {{bug_area}} to work correctly when {{bug_condition}},
+  **so that** {{expected_behavior}}.
+
+acceptance_criteria_template:
+  - "[ ] Bug is reproducible with test case"
+  - "[ ] Root cause identified and documented"
+  - "[ ] Fix implemented without breaking existing functionality"
+  - "[ ] Regression test added to prevent recurrence"
+  - "[ ] Fix verified in {{environments}}"
+
+tasks_template:
+  - "[ ] Reproduce the bug with minimal test case"
+  - "[ ] Identify root cause"
+  - "[ ] Implement fix"
+  - "[ ] Add regression test"
+  - "[ ] Verify fix doesn't break related functionality"
+  - "[ ] Update changelog/release notes"
+
+dev_notes_template:
+  investigation_template: |
+    **Steps to Reproduce:**
+    1. {{step_1}}
+    2. {{step_2}}
+    3. {{step_3}}
+
+    **Expected Result:** {{expected}}
+    **Actual Result:** {{actual}}
+
+    **Root Cause Analysis:**
+    - Component: {{affected_component}}
+    - Cause: {{root_cause}}
+    - Impact: {{impact_scope}}
+
+  testing_standards:
+    - "Regression test MUST be added"
+    - "Test should cover edge cases"
+    - "Verify fix in all affected environments"
+
+placeholders:
+  bug_area:
+    description: "What functionality has the bug"
+    examples: ["login flow", "data export", "search results"]
+  bug_condition:
+    description: "Under what conditions the bug occurs"
+    examples: ["special characters are used", "large datasets", "concurrent requests"]
+  expected_behavior:
+    description: "What should happen instead"
+    examples: ["users can log in successfully", "all data exports correctly"]

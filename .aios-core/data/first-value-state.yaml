@@ -1,0 +1,24 @@
+version: 1.0.0
+sessionStartedAt: '2026-02-24T07:57:17.661Z'
+milestones:
+  agent_activated:
+    id: agent_activated
+    name: Agent Activated
+    description: Successfully activated first AI agent
+    category: core
+    weight: 10
+    required: true
+    reachedAt: '2026-02-24T07:57:17.663Z'
+    context: {}
+  command_executed:
+    id: command_executed
+    name: Command Executed
+    description: Successfully executed first command
+    category: core
+    weight: 10
+    required: true
+    reachedAt: '2026-02-24T07:57:19.643Z'
+    context: {}
+firstValueReached: true
+firstValueAt: '2026-02-24T07:57:19.643Z'
+ttfv: 1982

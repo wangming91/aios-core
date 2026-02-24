@@ -1,0 +1,79 @@
+# Story Template: UI Component
+# Use for: React components, UI elements, frontend features
+
+template:
+  id: ui-component
+  name: UI Component
+  category: frontend
+  estimated_points: 3-8
+  typical_duration: 0.5-2 days
+  tags: [ui, component, frontend, react, accessibility]
+
+executor_assignment:
+  executor: "@dev"
+  quality_gate: "@ux-design-expert"
+  quality_gate_tools:
+    - accessibility_audit
+    - visual_regression
+    - responsive_test
+
+story_pattern: |
+  **As a** {{user_type}},
+  **I want** to {{user_action}} using {{component_name}},
+  **so that** {{user_benefit}}.
+
+acceptance_criteria_template:
+  - "[ ] Component renders correctly in all supported browsers"
+  - "[ ] Component is keyboard navigable"
+  - "[ ] Component meets WCAG 2.1 AA accessibility standards"
+  - "[ ] Component is responsive (mobile, tablet, desktop)"
+  - "[ ] Dark/light theme support"
+  - "[ ] Loading and error states handled"
+
+tasks_template:
+  - "[ ] Create component structure"
+  - "[ ] Implement component logic"
+  - "[ ] Add styling (CSS/Tailwind)"
+  - "[ ] Implement accessibility features"
+  - "[ ] Add responsive design"
+  - "[ ] Handle loading/error states"
+  - "[ ] Write unit tests"
+  - "[ ] Write visual regression tests"
+  - "[ ] Add Storybook documentation"
+
+dev_notes_template:
+  component_standards: |
+    **File Structure:**
+    ```
+    ComponentName/
+    ├── index.tsx
+    ├── ComponentName.tsx
+    ├── ComponentName.styles.ts
+    ├── ComponentName.types.ts
+    ├── ComponentName.test.tsx
+    └── ComponentName.stories.tsx
+    ```
+
+    **Accessibility Checklist:**
+    - [ ] Semantic HTML elements
+    - [ ] ARIA labels where needed
+    - [ ] Focus management
+    - [ ] Color contrast ratio ≥ 4.5:1
+    - [ ] Screen reader compatible
+
+  testing_standards:
+    - "Unit tests with Testing Library"
+    - "Accessibility tests with jest-axe"
+    - "Visual regression with Chromatic"
+    - "E2E tests for user flows"
+
+placeholders:
+  component_name:
+    description: "Name of the UI component"
+    examples: ["SearchBar", "DataTable", "Modal", "NavigationMenu"]
+  user_type:
+    description: "Who uses the component"
+    examples: ["authenticated user", "admin", "guest"]
+  user_action:
+    description: "What the user does with the component"
+    examples: ["search for items", "view data in a table", "confirm an action"]

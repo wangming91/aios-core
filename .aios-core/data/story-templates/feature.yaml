@@ -1,0 +1,68 @@
+# Story Template: Feature Implementation
+# Use for: New feature development, functionality additions
+
+template:
+  id: feature-story
+  name: Feature Implementation
+  category: development
+  estimated_points: 5-13
+  typical_duration: 1-3 days
+  tags: [feature, development, new-functionality]
+
+executor_assignment:
+  executor: "@dev"
+  quality_gate: "@architect"
+  quality_gate_tools:
+    - code_review
+    - pattern_validation
+    - security_scan
+
+story_pattern: |
+  **As a** {{user_role}},
+  **I want** {{feature_description}},
+  **so that** {{business_value}}
+
+acceptance_criteria_template:
+  - "[ ] {{feature_name}} is accessible via {{access_method}}"
+  - "[ ] User can {{primary_action}} successfully"
+  - "[ ] System validates {{validation_rules}}"
+  - "[ ] Error handling displays {{error_behavior}}"
+  - "[ ] Feature works with {{compatibility_requirements}}"
+
+tasks_template:
+  - "[ ] Create {{feature_name}} component/module"
+  - "[ ] Implement {{feature_name}} business logic"
+  - "[ ] Add input validation for {{inputs}}"
+  - "[ ] Implement error handling and edge cases"
+  - "[ ] Write unit tests (target: 80%+ coverage)"
+  - "[ ] Add integration tests"
+  - "[ ] Update documentation"
+
+dev_notes_template:
+  architecture_references:
+    - "Reference relevant architecture docs"
+    - "List design patterns to follow"
+  testing_standards:
+    - "Unit tests: tests/unit/{{feature_name}}.test.js"
+    - "Integration tests: tests/integration/{{feature_name}}.test.js"
+    - "Test frameworks: Jest, Testing Library"
+
+placeholders:
+  user_role:
+    description: "Who will use this feature"
+    examples: ["developer", "end user", "admin", "system"]
+  feature_description:
+    description: "What the feature does"
+    examples: ["search functionality", "export data", "manage settings"]
+  business_value:
+    description: "Why this feature is needed"
+    examples: ["improve productivity", "reduce errors", "enable new workflows"]
+  feature_name:
+    description: "Short name for the feature"
+    examples: ["SearchPanel", "DataExporter", "SettingsManager"]
+  access_method:
+    description: "How users access the feature"
+    examples: ["CLI command", "UI button", "API endpoint", "keyboard shortcut"]
+  primary_action:
+    description: "Main action the user performs"
+    examples: ["search for items", "export to CSV", "save preferences"]

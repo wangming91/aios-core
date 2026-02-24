@@ -1,0 +1,83 @@
+# Story Template: Database Migration
+# Use for: Schema changes, migrations, RLS policies
+
+template:
+  id: database-migration
+  name: Database Migration
+  category: database
+  estimated_points: 3-8
+  typical_duration: 0.5-2 days
+  tags: [database, migration, schema, sql, rls]
+
+executor_assignment:
+  executor: "@data-engineer"
+  quality_gate: "@dev"
+  quality_gate_tools:
+    - schema_validation
+    - migration_dry_run
+    - rls_policy_check
+
+story_pattern: |
+  **As a** {{stakeholder}},
+  **I want** {{database_change}},
+  **so that** {{business_reason}}.
+
+acceptance_criteria_template:
+  - "[ ] Migration file created with up/down scripts"
+  - "[ ] Migration tested locally (dry-run)"
+  - "[ ] RLS policies updated (if applicable)"
+  - "[ ] Rollback procedure documented"
+  - "[ ] Migration applied to staging successfully"
+  - "[ ] Data integrity verified post-migration"
+
+tasks_template:
+  - "[ ] Design schema changes"
+  - "[ ] Create migration file (YYYYMMDD_description.sql)"
+  - "[ ] Write UP migration script"
+  - "[ ] Write DOWN migration script"
+  - "[ ] Add/update RLS policies"
+  - "[ ] Test migration locally"
+  - "[ ] Verify data integrity"
+  - "[ ] Apply to staging"
+  - "[ ] Document rollback procedure"
+
+dev_notes_template:
+  migration_standards: |
+    **Migration File Naming:**
+    - Format: YYYYMMDD_HHMM_description.sql
+    - Example: 20260224_1015_add_user_preferences.sql
+
+    **Required Sections:**
+    ```sql
+    -- UP Migration
+    -- Description: {{description}}
+    -- Author: {{author}}
+    -- Date: {{date}}
+
+    {{up_sql}}
+
+    -- DOWN Migration
+    {{down_sql}}
+    ```
+
+  rls_template: |
+    **RLS Policy Pattern:**
+    ```sql
+    CREATE POLICY "{{policy_name}}" ON {{table}}
+      FOR {{operation}} TO {{role}}
+      USING ({{condition}});
+    ```
+
+  testing_standards:
+    - "Always test with `db-dry-run` before applying"
+    - "Verify foreign key constraints"
+    - "Check index performance"
+    - "Test rollback procedure"
+
+placeholders:
+  database_change:
+    description: "What database change is needed"
+    examples: ["add user_preferences table", "create index on orders", "update RLS policy for products"]
+  business_reason:
+    description: "Why this change is needed"
+    examples: ["support new feature", "improve query performance", "enhance data security"]
