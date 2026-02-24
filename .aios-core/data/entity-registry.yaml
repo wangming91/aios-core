@@ -1,7 +1,7 @@
 metadata:
   version: 1.0.0
-  lastUpdated: '2026-02-20T13:27:52.155Z'
-  entityCount: 534
+  lastUpdated: '2026-02-24T08:34:11.287Z'
+  entityCount: 548
   checksumAlgorithm: sha256
 entities:
   tasks:
@@ -5992,6 +5992,71 @@ entities:
         extensionPoints: []
       checksum: sha256:310884d94b81be976a346987822306a16a73ba812c08c3b805f4a03216ffef38
       lastVerified: '2026-02-15T19:28:17.743Z'
+    first-value-detector:
+      path: .aios-core/development/scripts/first-value-detector.js
+      type: script
+      purpose: '''Successfully activated first AI agent'','
+      keywords:
+        - first
+        - value
+        - detector
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.7
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:26bf44b983f70817423dbf7721ab64c8fdefb55cefb6a6c6d4076b041151871c
+      lastVerified: '2026-02-24T08:34:11.286Z'
+    flow-state-engine:
+      path: .aios-core/development/scripts/flow-state-engine.js
+      type: script
+      purpose: '''No active work detected'','
+      keywords:
+        - flow
+        - state
+        - engine
+      usedBy: []
+      dependencies:
+        - project-status-loader
+      adaptability:
+        score: 0.7
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:00fa78ed550b582520f440ab1d59c153dd85d01308d50da1e09f95066ac6a4f8
+      lastVerified: '2026-02-24T08:34:11.286Z'
+    handoff-visualizer:
+      path: .aios-core/development/scripts/handoff-visualizer.js
+      type: script
+      purpose: Entity at .aios-core/development/scripts/handoff-visualizer.js
+      keywords:
+        - handoff
+        - visualizer
+      usedBy: []
+      dependencies:
+        - collaboration-tracker
+      adaptability:
+        score: 0.7
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:53edfa296301da75d959da00da0ffa0444cb4e5a46b5fd4eba16d742f3481398
+      lastVerified: '2026-02-24T08:34:11.286Z'
+    predictive-error-detector:
+      path: .aios-core/development/scripts/predictive-error-detector.js
+      type: script
+      purpose: '''Working directory has uncommitted changes'','
+      keywords:
+        - predictive
+        - error
+        - detector
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.7
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:c77ff44baecf6e0c5f4c804dfff40b3e60965718ff60b47ee27956b8c5915753
+      lastVerified: '2026-02-24T08:34:11.286Z'
   modules:
     dev-helper:
       path: .aios-core/core/code-intel/helpers/dev-helper.js
@@ -8876,6 +8941,7 @@ entities:
         - collaboration
         - tracker
       usedBy:
+        - handoff-visualizer
         - state-manager
       dependencies: []
       adaptability:
@@ -9375,8 +9441,8 @@ entities:
         score: 0.3
         constraints: []
         extensionPoints: []
-      checksum: sha256:0f8fb4bce7c75852937bc822547ce74735b212c16761b2d58d95356708fd0a14
-      lastVerified: '2026-02-15T19:33:09.495Z'
+      checksum: sha256:3c4126ccc84b82e782d198980497ec352e969093ac8ca11513346b2852c3bc11
+      lastVerified: '2026-02-24T08:34:11.286Z'
     sm:
       path: .aios-core/development/agents/sm.md
       type: agent
@@ -9632,6 +9698,173 @@ entities:
         extensionPoints: []
       checksum: sha256:1a7262912c8c8e264d307f0d38a1109bdb2b9bff9ea7d8855c768835201aa59b
       lastVerified: '2026-02-08T13:33:24.397Z'
+    first-value-state:
+      path: .aios-core/data/first-value-state.yaml
+      type: data
+      purpose: Successfully activated first AI agent
+      keywords:
+        - first
+        - value
+        - state
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:70e0fad615606b3e2937ccc8a46d144adf7e941775afe2c5bdfdea96b7689088
+      lastVerified: '2026-02-24T08:34:11.283Z'
+    predictive-error-state:
+      path: .aios-core/data/predictive-error-state.yaml
+      type: data
+      purpose: Working directory has uncommitted changes
+      keywords:
+        - predictive
+        - error
+        - state
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:21fc622be83392e1dfedb09d8b0b736232c1deff4e7e6823e883c42f82377060
+      lastVerified: '2026-02-24T08:34:11.284Z'
+    INDEX:
+      path: .aios-core/data/story-templates/INDEX.yaml
+      type: data
+      purpose: Story Templates Index
+      keywords:
+        - index
+        - story
+        - templates
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:a930ef27ed09bb6f9e4e293b23a6235b5d975e52448f55bbf76f94ebd9763231
+      lastVerified: '2026-02-24T08:34:11.285Z'
+    api-endpoint:
+      path: .aios-core/data/story-templates/api-endpoint.yaml
+      type: data
+      purpose: '"Who consumes the API"'
+      keywords:
+        - api
+        - endpoint
+        - story
+        - 'template:'
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:bc7ded9dc8a535e31168f556deb703c7a6398dcb6f3130f3ea5060fb55336cb4
+      lastVerified: '2026-02-24T08:34:11.285Z'
+    bugfix:
+      path: .aios-core/data/story-templates/bugfix.yaml
+      type: data
+      purpose: '"What functionality has the bug"'
+      keywords:
+        - bugfix
+        - story
+        - 'template:'
+        - bug
+        - fix
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:45248c0aae5cbcf151123764ba599f025d9a342bdbd034b80b691c5cdddc26fe
+      lastVerified: '2026-02-24T08:34:11.285Z'
+    database-migration:
+      path: .aios-core/data/story-templates/database-migration.yaml
+      type: data
+      purpose: '{{description}}'
+      keywords:
+        - database
+        - migration
+        - story
+        - 'template:'
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:74db409829ac157424d08e62d9c79e344fb141ee8adb11caf186c7ffd7171f6c
+      lastVerified: '2026-02-24T08:34:11.285Z'
+    feature:
+      path: .aios-core/data/story-templates/feature.yaml
+      type: data
+      purpose: '"Who will use this feature"'
+      keywords:
+        - feature
+        - story
+        - 'template:'
+        - implementation
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:a2fe275671cd604d0cc10b5c9990835eeda90c1f669389ab291ab7679f18c4db
+      lastVerified: '2026-02-24T08:34:11.285Z'
+    refactoring:
+      path: .aios-core/data/story-templates/refactoring.yaml
+      type: data
+      purpose: '"What code/module is being refactored"'
+      keywords:
+        - refactoring
+        - story
+        - 'template:'
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:f2503e6e24cd901e96b636a627f2612b8e03a04da914948c1babed8312e5c477
+      lastVerified: '2026-02-24T08:34:11.285Z'
+    security-fix:
+      path: .aios-core/data/story-templates/security-fix.yaml
+      type: data
+      purpose: '"Type of security vulnerability"'
+      keywords:
+        - security
+        - fix
+        - story
+        - 'template:'
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:3192e614e923b203b6623533c66f4d358e61f2f6b384b95449d22d70b595de4e
+      lastVerified: '2026-02-24T08:34:11.285Z'
+    ui-component:
+      path: .aios-core/data/story-templates/ui-component.yaml
+      type: data
+      purpose: '"Name of the UI component"'
+      keywords:
+        - ui
+        - component
+        - story
+        - 'template:'
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:2d03e91ef6fc785cbd85cfd3e60e5a70eeee2522ef969f7569c08eb177dbb564
+      lastVerified: '2026-02-24T08:34:11.286Z'
 categories:
   - id: tasks
     description: Executable task workflows for agent operations
