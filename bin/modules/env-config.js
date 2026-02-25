@@ -15,6 +15,7 @@ const yaml = require('js-yaml');
 const inquirer = require('inquirer');
 const ora = require('ora');
 const chalk = require('chalk');
+const { ErrorFactory } = require('../../.aios-core/core/errors');
 
 /**
  * Configure environment files (.env and core-config.yaml)
@@ -56,7 +57,7 @@ async function configureEnvironment(options = {}) {
       results.files.push(envResult.file);
       spinner.succeed(`.env created at ${path.relative(projectPath, envResult.file)}`);
     } else {
-      throw new Error(envResult.error);
+      throw ErrorFactory.fileWriteError('.env', { originalError: envResult.error });
     }
 
     // Step 3: Generate .env.example file
@@ -81,7 +82,7 @@ async function configureEnvironment(options = {}) {
       results.files.push(yamlResult.file);
       spinner.succeed(`core-config.yaml created at ${path.relative(projectPath, yamlResult.file)}`);
     } else {
-      throw new Error(yamlResult.error);
+      throw ErrorFactory.configParseError('core-config.yaml', { originalError: yamlResult.error });
     }
 
     // Track skipped API keys
@@ -331,7 +332,7 @@ async function generateCoreConfigYAML(projectPath, wizardState) {
     try {
       yaml.load(template);
     } catch (yamlError) {
-      throw new Error(`Invalid YAML syntax: ${yamlError.message}`);
+      throw ErrorFactory.configParseError('core-config.yaml', { reason: yamlError.message });
     }
 
     // Write core-config.yaml
@@ -378,13 +379,13 @@ function validateEnvFormat(content) {
 
     // Check KEY=value format
     if (!line.includes('=')) {
-      throw new Error(`Invalid .env format at line ${i + 1}: Missing '=' separator`);
+      throw ErrorFactory.invalidInput('.env', `Invalid format at line ${i + 1}: Missing '=' separator`);
     }
 
     // Check for spaces around =
     const [key] = line.split('=');
     if (key.trim() !== key) {
-      throw new Error(`Invalid .env format at line ${i + 1}: Spaces around key not allowed`);
+      throw ErrorFactory.invalidInput('.env', `Invalid format at line ${i + 1}: Spaces around key not allowed`);
     }
   }
 }

@@ -6,6 +6,7 @@ const os = require('os');
 const yaml = require('js-yaml');
 const crypto = require('crypto');
 
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 const {
   RegistryHealer,
   HEALING_RULES,
@@ -892,7 +893,13 @@ describe('RegistryHealer', () => {
       writeTestRegistry({});
       const healer = createTestHealer();
 
-      expect(() => healer.rollback('nonexistent-batch-id')).toThrow(/Backup not found/);
+      try {
+        healer.rollback('nonexistent-batch-id');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('IDS_009');
+      }
     });
 
     it('logs rollback action to healing log', () => {

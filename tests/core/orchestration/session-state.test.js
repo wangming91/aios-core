@@ -248,7 +248,7 @@ describe('SessionState', () => {
 
     it('should throw if state not initialized', async () => {
       await expect(sessionState.updateSessionState({})).rejects.toThrow(
-        'Session state not initialized',
+        'No active session',
       );
     });
   });

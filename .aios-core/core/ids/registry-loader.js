@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const crypto = require('crypto');
+const { ErrorFactory } = require('../errors');
 
 const DEFAULT_REGISTRY_PATH = path.resolve(__dirname, '../../data/entity-registry.yaml');
 
@@ -39,7 +40,7 @@ class RegistryLoader {
     try {
       content = fs.readFileSync(this._registryPath, 'utf8');
     } catch (err) {
-      throw new Error(`[IDS] Failed to read registry at ${this._registryPath}: ${err.message}`);
+      throw ErrorFactory.fileReadError(this._registryPath, { reason: err.message });
     }
 
     if (!content || !content.trim()) {
@@ -51,7 +52,7 @@ class RegistryLoader {
     try {
       this._registry = yaml.load(content);
     } catch (err) {
-      throw new Error(`[IDS] Failed to parse registry at ${this._registryPath}: ${err.message}`);
+      throw ErrorFactory.configParseError(this._registryPath, { reason: err.message });
     }
 
     if (!this._registry || !this._registry.entities) {
@@ -302,7 +303,7 @@ class RegistryLoader {
       const expected = entity.checksum.replace('sha256:', '');
       return hash === expected;
     } catch (err) {
-      throw new Error(`[IDS] Failed to verify checksum for ${entityId}: ${err.message}`);
+      throw ErrorFactory.create('IDS_003', { entityId, reason: err.message });
     }
   }
 }

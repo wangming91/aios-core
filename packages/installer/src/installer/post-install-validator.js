@@ -28,6 +28,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
 const { hashFile, hashesMatch } = require('./file-hasher');
+const { ErrorFactory } = require('../../../../.aios-core/core/errors');
 const { loadAndVerifyManifest } = require('./manifest-signature');
 
 /**
@@ -500,9 +501,7 @@ class PostInstallValidator {
     // Example: "🔒" has length 2 but is 4 bytes in UTF-8
     const byteLength = Buffer.byteLength(content, 'utf8');
     if (byteLength > SecurityLimits.MAX_MANIFEST_SIZE) {
-      throw new Error(
-        `Manifest exceeds maximum size (${byteLength} bytes > ${SecurityLimits.MAX_MANIFEST_SIZE} bytes)`,
-      );
+      throw ErrorFactory.invalidInput('manifest', `exceeds maximum size (${byteLength} bytes > ${SecurityLimits.MAX_MANIFEST_SIZE} bytes)`);
     }
 
     // SECURITY [C2]: Use FAILSAFE_SCHEMA - no custom types, no code execution
@@ -510,18 +509,16 @@ class PostInstallValidator {
 
     // Validate root structure
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-      throw new Error('Manifest must be a valid YAML object');
+      throw ErrorFactory.invalidInput('manifest', 'must be a valid YAML object');
     }
 
     if (!Array.isArray(parsed.files)) {
-      throw new Error('Manifest missing required "files" array');
+      throw ErrorFactory.requiredFieldMissing('files');
     }
 
     // SECURITY: File count limit
     if (parsed.files.length > SecurityLimits.MAX_FILE_COUNT) {
-      throw new Error(
-        `Manifest contains too many files (${parsed.files.length} > ${SecurityLimits.MAX_FILE_COUNT})`,
-      );
+      throw ErrorFactory.invalidInput('manifest', `contains too many files (${parsed.files.length} > ${SecurityLimits.MAX_FILE_COUNT})`);
     }
 
     // SECURITY [H5]: Validate and sanitize each entry
@@ -533,7 +530,7 @@ class PostInstallValidator {
       if (typeof entry === 'string') {
         const validation = validateManifestEntry({ path: entry }, i);
         if (!validation.valid) {
-          throw new Error(validation.error);
+          throw ErrorFactory.invalidInput(`manifest.files[${i}]`, validation.error);
         }
         sanitizedFiles.push(validation.sanitized);
         continue;
@@ -544,7 +541,7 @@ class PostInstallValidator {
       if (typeof entry === 'object' && entry !== null) {
         for (const key of Object.keys(entry)) {
           if (!ALLOWED_MANIFEST_FIELDS.includes(key)) {
-            throw new Error(`Entry ${i}: unknown field '${key}' in manifest`);
+            throw ErrorFactory.invalidInput(`manifest.files[${i}]`, `unknown field '${key}'`);
           }
         }
       }
@@ -554,9 +551,7 @@ class PostInstallValidator {
       if (entry.size !== undefined && entry.size !== null) {
         const sizeNum = Number(entry.size);
         if (Number.isNaN(sizeNum) || !Number.isInteger(sizeNum) || sizeNum < 0) {
-          throw new Error(
-            `Entry ${i}: invalid size '${entry.size}' for path '${entry.path}' (must be non-negative integer)`,
-          );
+          throw ErrorFactory.invalidInput(`manifest.files[${i}].size`, `invalid size '${entry.size}' (must be non-negative integer)`);
         }
       }
 
@@ -572,7 +567,7 @@ class PostInstallValidator {
 
       const validation = validateManifestEntry(normalizedEntry, i);
       if (!validation.valid) {
-        throw new Error(validation.error);
+        throw ErrorFactory.invalidInput(`manifest.files[${i}]`, validation.error);
       }
       sanitizedFiles.push(validation.sanitized);
     }

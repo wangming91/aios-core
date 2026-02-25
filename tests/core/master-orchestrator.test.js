@@ -173,7 +173,7 @@ describe('MasterOrchestrator', () => {
     });
 
     it('should throw error for unknown epic', async () => {
-      await expect(orchestrator.executeEpic(99)).rejects.toThrow('Unknown epic number');
+      await expect(orchestrator.executeEpic(99)).rejects.toThrow('Unknown epic');
     });
   });
 

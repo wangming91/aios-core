@@ -17,6 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { ErrorFactory } = require('../../errors');
 
 const SCHEMA_VERSION = '2.0';
 const DEFAULT_MAX_AGE_HOURS = 24;
@@ -61,7 +62,7 @@ function buildDefaultSession(sessionId, cwd) {
 function resolveSessionFile(sessionId, sessionsDir) {
   // Sanitize sessionId to prevent path traversal
   if (typeof sessionId !== 'string' || sessionId.includes('..') || sessionId.includes('/') || sessionId.includes('\\')) {
-    throw new Error('[synapse:session] Invalid sessionId: contains path separators or traversal');
+    throw ErrorFactory.invalidInput('sessionId', 'Invalid sessionId: contains path separators or traversal');
   }
 
   const filePath = path.join(sessionsDir, `${sessionId}.json`);
@@ -69,7 +70,7 @@ function resolveSessionFile(sessionId, sessionsDir) {
   const resolvedDir = path.resolve(sessionsDir);
 
   if (!resolved.startsWith(resolvedDir + path.sep) && resolved !== resolvedDir) {
-    throw new Error('[synapse:session] Invalid sessionId: resolved path escapes sessions directory');
+    throw ErrorFactory.invalidInput('sessionId', 'Invalid sessionId: resolved path escapes sessions directory');
   }
 
   return filePath;

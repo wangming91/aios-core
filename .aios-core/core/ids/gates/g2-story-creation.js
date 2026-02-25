@@ -17,6 +17,7 @@
  */
 
 const path = require('path');
+const { ErrorFactory } = require('../../errors');
 const { VerificationGate } = require(path.resolve(__dirname, '../verification-gate.js'));
 
 class G2StoryCreationGate extends VerificationGate {
@@ -29,7 +30,7 @@ class G2StoryCreationGate extends VerificationGate {
    */
   constructor(options = {}) {
     if (!options.decisionEngine) {
-      throw new Error('[IDS-G2] decisionEngine is required');
+      throw ErrorFactory.requiredFieldMissing('decisionEngine');
     }
 
     super({

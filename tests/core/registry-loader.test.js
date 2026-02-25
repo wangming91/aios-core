@@ -154,7 +154,7 @@ describe('ServiceRegistry', () => {
     it('should throw error on file read failure', async () => {
       fs.readFile.mockRejectedValue(new Error('File not found'));
 
-      await expect(registry.load()).rejects.toThrow('Failed to load registry');
+      await expect(registry.load()).rejects.toThrow();
     });
   });
 

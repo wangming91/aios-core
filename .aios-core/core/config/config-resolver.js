@@ -27,6 +27,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const yaml = require('js-yaml');
+const { ErrorFactory } = require('../errors');
 const { deepMerge } = require('./merge-utils');
 const { interpolateEnvVars, lintEnvPatterns } = require('./env-interpolator');
 const { globalConfigCache } = require('./config-cache');
@@ -186,7 +187,7 @@ function loadYaml(projectRoot, relativePath) {
     const data = yaml.load(content) || {};
     return { data, path: fullPath };
   } catch (error) {
-    throw new Error(`Failed to parse YAML at ${fullPath}: ${error.message}`);
+    throw ErrorFactory.create('SYS_001', { operation: 'parseYAML', path: fullPath, reason: error.message });
   }
 }
 
@@ -359,7 +360,7 @@ function loadLegacyConfig(projectRoot) {
   const legacy = loadYaml(projectRoot, CONFIG_FILES.legacy);
 
   if (!legacy.data) {
-    throw new Error(`Legacy config file not found: ${CONFIG_FILES.legacy}`);
+    throw ErrorFactory.fileNotFound(CONFIG_FILES.legacy, { type: 'config' });
   }
 
   const suppressDeprecation = process.env.AIOS_SUPPRESS_DEPRECATION === 'true'
@@ -499,7 +500,7 @@ function getConfigAtLevel(projectRoot, level, options = {}) {
       relativePath = CONFIG_FILES.legacy;
       break;
     default:
-      throw new Error(`Unknown config level: ${level}`);
+      throw ErrorFactory.invalidInput('level', `Unknown config level: ${level}`);
   }
 
   const { data } = loadYaml(projectRoot, relativePath);

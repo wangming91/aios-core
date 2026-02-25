@@ -24,6 +24,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawn, execSync } = require('child_process');
 const { EventEmitter } = require('events');
+const { ErrorFactory } = require('../errors');
 
 // Import components
 const { AutonomousBuildLoop, BuildEvent } = require('./autonomous-build-loop');
@@ -155,7 +156,7 @@ class BuildOrchestrator extends EventEmitter {
 
     // Check for existing build (AC7)
     if (this.activeBuilds.has(storyId)) {
-      throw new Error(`Build already in progress for ${storyId}`);
+      throw ErrorFactory.buildAlreadyCompleted({ storyId });
     }
 
     // Initialize build context
@@ -316,7 +317,7 @@ class BuildOrchestrator extends EventEmitter {
     // Verify story exists
     const storyPath = this.findStoryFile(ctx.storyId);
     if (!storyPath) {
-      throw new Error(`Story not found: ${ctx.storyId}`);
+      throw ErrorFactory.fileNotFound(ctx.storyId, { type: 'story' });
     }
     ctx.storyPath = storyPath;
 
@@ -643,7 +644,7 @@ The subtask is complete only when verification passes.
       try {
         execSync('npm test -- --passWithNoTests', { cwd: workDir, stdio: 'pipe', timeout: 120000 });
       } catch (e) {
-        throw new Error(`Tests failed: ${e.message}`);
+        throw ErrorFactory.create('SYS_001', { operation: 'runTests', reason: e.message });
       }
 
       // Run typecheck if available
@@ -704,7 +705,7 @@ The subtask is complete only when verification passes.
     });
 
     if (!ctx.mergeResult.success) {
-      throw new Error(`Merge failed: ${ctx.mergeResult.error}`);
+      throw ErrorFactory.gitMergeConflict(ctx.mergeResult.error);
     }
 
     return ctx.mergeResult;

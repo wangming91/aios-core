@@ -10,6 +10,7 @@
  * @version 1.0.0
  */
 
+const { ErrorFactory } = require('../../errors');
 const EpicExecutor = require('./epic-executor');
 const Epic3Executor = require('./epic-3-executor');
 const Epic4Executor = require('./epic-4-executor');
@@ -40,7 +41,7 @@ function createExecutor(epicNum, orchestrator) {
   const ExecutorClass = EXECUTOR_MAP[epicNum];
 
   if (!ExecutorClass) {
-    throw new Error(`No executor found for epic ${epicNum}`);
+    throw ErrorFactory.invalidInput('epicNum', `No executor found for epic ${epicNum}`);
   }
 
   return new ExecutorClass(orchestrator);

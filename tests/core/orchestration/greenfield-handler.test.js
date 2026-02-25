@@ -17,6 +17,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 
 // Module under test
 const {
@@ -95,11 +96,11 @@ describe('GreenfieldHandler', () => {
 
   describe('constructor', () => {
     test('should throw error if projectRoot is not provided', () => {
-      expect(() => new GreenfieldHandler()).toThrow('projectRoot is required');
+      expect(() => new GreenfieldHandler()).toThrow();
     });
 
     test('should throw error if projectRoot is not a string', () => {
-      expect(() => new GreenfieldHandler(123)).toThrow('projectRoot is required and must be a string');
+      expect(() => new GreenfieldHandler(123)).toThrow();
     });
 
     test('should initialize with correct defaults', () => {

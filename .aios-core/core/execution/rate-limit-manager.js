@@ -7,6 +7,7 @@
  */
 
 const EventEmitter = require('events');
+const { ErrorFactory } = require('../errors');
 
 class RateLimitManager extends EventEmitter {
   constructor(config = {}) {
@@ -69,7 +70,7 @@ class RateLimitManager extends EventEmitter {
 
         if (attempt === this.maxRetries) {
           this.logEvent('max_retries_exceeded', { context, error: error.message });
-          throw new Error(`Rate limit exceeded after ${this.maxRetries} retries: ${error.message}`);
+          throw ErrorFactory.create('SYS_001', { operation: 'rateLimit', reason: `Rate limit exceeded after ${this.maxRetries} retries: ${error.message}` });
         }
 
         const delay = this.calculateDelay(attempt, error);

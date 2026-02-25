@@ -1,6 +1,6 @@
 # Getting Started with Synkra AIOS
 
-> **EN** | [PT](./pt/getting-started.md) | [ES](./es/getting-started.md)
+> **EN** | [PT](./pt/getting-started.md) | [ES](./es/getting-started.md) | [ZH-CN](./zh-cn/getting-started.md)
 
 ---
 

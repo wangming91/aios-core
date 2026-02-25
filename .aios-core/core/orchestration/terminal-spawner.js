@@ -17,6 +17,7 @@ const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
 const os = require('os');
+const { ErrorFactory } = require('../errors');
 
 // Constants
 const POLL_INTERVAL_MS = 500;
@@ -183,23 +184,23 @@ function getScriptPath() {
  */
 function validateArgs(agent, task) {
   if (!agent || typeof agent !== 'string') {
-    throw new Error('Agent ID is required and must be a string');
+    throw ErrorFactory.requiredFieldMissing('agent');
   }
 
   if (!task || typeof task !== 'string') {
-    throw new Error('Task is required and must be a string');
+    throw ErrorFactory.requiredFieldMissing('task');
   }
 
   // Validate agent format (should be alphanumeric with optional hyphen)
   const agentPattern = /^[a-zA-Z][a-zA-Z0-9-]*$/;
   if (!agentPattern.test(agent)) {
-    throw new Error(`Invalid agent ID format: ${agent}`);
+    throw ErrorFactory.invalidInput('agent', `Invalid format: ${agent}`);
   }
 
   // Validate task format
   const taskPattern = /^[a-zA-Z][a-zA-Z0-9-]*$/;
   if (!taskPattern.test(task)) {
-    throw new Error(`Invalid task format: ${task}`);
+    throw ErrorFactory.invalidInput('task', `Invalid format: ${task}`);
   }
 }
 
@@ -282,7 +283,7 @@ async function pollForOutput(outputFile, timeout = DEFAULT_TIMEOUT_MS, debug = f
     // Ignore cleanup errors
   }
 
-  throw new Error(`Timeout waiting for agent output after ${timeout}ms`);
+  throw ErrorFactory.create('SYS_001', { operation: 'pollForOutput', timeout: `${timeout}ms` });
 }
 
 /**
@@ -340,7 +341,7 @@ async function spawnInline(agent, task, options = {}) {
 
   // Verify script exists
   if (!fsSync.existsSync(scriptPath)) {
-    throw new Error(`pm.sh script not found at: ${scriptPath}`);
+    throw ErrorFactory.fileNotFound(scriptPath);
   }
 
   return new Promise((resolve) => {
@@ -535,7 +536,7 @@ async function spawnAgent(agent, task, options = {}) {
 
   // Verify script exists
   if (!fsSync.existsSync(scriptPath)) {
-    throw new Error(`pm.sh script not found at: ${scriptPath}`);
+    throw ErrorFactory.fileNotFound(scriptPath);
   }
 
   // Execute with retry logic (Task 4.2)

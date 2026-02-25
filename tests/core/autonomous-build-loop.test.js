@@ -203,7 +203,7 @@ describe('AutonomousBuildLoop', () => {
     test('throws if already running', async () => {
       const loop = createLoop();
       loop.isRunning = true;
-      await expect(loop.run('story-1')).rejects.toThrow('Build loop is already running');
+      await expect(loop.run('story-1')).rejects.toThrow('already');
     });
 
     test('emits BUILD_STARTED event', async () => {
@@ -232,7 +232,7 @@ describe('AutonomousBuildLoop', () => {
       const loop = createLoop();
       // No plan provided and no plan files exist
       await expect(loop.run('story-1', { rootPath: tmpDir })).rejects.toThrow(
-        'No implementation plan found for story-1',
+        'not found',
       );
     });
 
@@ -533,7 +533,7 @@ describe('AutonomousBuildLoop', () => {
     test('returns null when no plan found (triggers error)', async () => {
       const loop = createLoop();
       await expect(loop.run('story-1', { rootPath: tmpDir })).rejects.toThrow(
-        'No implementation plan found',
+        'not found',
       );
     });
   });

@@ -7,6 +7,7 @@
 
 const path = require('path');
 const fs = require('fs-extra');
+const { isAIOSError } = require('../../.aios-core/core/errors');
 
 // Import the modules under test
 const ElicitationEngine = require('../../.aios-core/core/elicitation/elicitation-engine');
@@ -91,33 +92,53 @@ describe('Core Security Tests (Story 3.0)', () => {
     });
 
     it('should reject sessionId with path traversal attempt (../)', () => {
-      expect(() => {
+      try {
         sessionManager.getSessionPath('../../../etc/passwd');
-      }).toThrow('Invalid sessionId format');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_001');
+      }
     });
 
     it('should reject sessionId with backslash traversal (..\\)', () => {
-      expect(() => {
+      try {
         sessionManager.getSessionPath('..\\..\\Windows\\system.ini');
-      }).toThrow('Invalid sessionId format');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_001');
+      }
     });
 
     it('should reject sessionId that is too short', () => {
-      expect(() => {
+      try {
         sessionManager.getSessionPath('abc123');
-      }).toThrow('Invalid sessionId format');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_001');
+      }
     });
 
     it('should reject sessionId that is too long', () => {
-      expect(() => {
+      try {
         sessionManager.getSessionPath('1234567890abcdef1234');
-      }).toThrow('Invalid sessionId format');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_001');
+      }
     });
 
     it('should reject sessionId with non-hex characters', () => {
-      expect(() => {
+      try {
         sessionManager.getSessionPath('ghijklmnopqrstuv');
-      }).toThrow('Invalid sessionId format');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_001');
+      }
     });
   });
 

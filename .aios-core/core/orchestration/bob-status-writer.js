@@ -22,6 +22,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const os = require('os');
+const { ErrorFactory } = require('../errors');
 
 /**
  * Bob Status Schema version
@@ -131,7 +132,7 @@ class BobStatusWriter {
    */
   constructor(projectRoot, options = {}) {
     if (!projectRoot || typeof projectRoot !== 'string') {
-      throw new Error('projectRoot is required and must be a string');
+      throw ErrorFactory.requiredFieldMissing('projectRoot');
     }
 
     this.projectRoot = projectRoot;

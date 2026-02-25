@@ -11,6 +11,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const os = require('os');
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 
 // Module under test
 const {
@@ -465,7 +466,13 @@ describe('Terminal Spawner (Story 12.10)', () => {
       await fs.writeFile(outputFile, 'test output');
 
       // When - poll with very short timeout
-      await expect(pollForOutput(outputFile, 100, false)).rejects.toThrow('Timeout');
+      try {
+        await pollForOutput(outputFile, 100, false);
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('SYS_001');
+      }
 
       // Then - lock file should be cleaned up
       const lockExists = fsSync.existsSync(lockFile);

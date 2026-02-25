@@ -9,6 +9,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
+const { ErrorFactory } = require('../errors');
 
 class ElicitationSessionManager {
   constructor(sessionDir = '.aios/sessions') {
@@ -61,7 +62,7 @@ class ElicitationSessionManager {
   async saveSession(session = null) {
     const sessionToSave = session || this.activeSession;
     if (!sessionToSave) {
-      throw new Error('No active session to save');
+      throw ErrorFactory.noActiveSession();
     }
 
     sessionToSave.updated = new Date().toISOString();
@@ -79,7 +80,7 @@ class ElicitationSessionManager {
     const sessionPath = this.getSessionPath(sessionId);
 
     if (!await fs.pathExists(sessionPath)) {
-      throw new Error(`Session ${sessionId} not found`);
+      throw ErrorFactory.sessionNotFound(sessionId);
     }
 
     const session = await fs.readJson(sessionPath);
@@ -95,7 +96,7 @@ class ElicitationSessionManager {
    */
   async updateAnswers(answers, stepIndex = null) {
     if (!this.activeSession) {
-      throw new Error('No active session');
+      throw ErrorFactory.noActiveSession();
     }
 
     // Merge answers
@@ -178,7 +179,7 @@ class ElicitationSessionManager {
    */
   async completeSession(result = 'success') {
     if (!this.activeSession) {
-      throw new Error('No active session');
+      throw ErrorFactory.noActiveSession();
     }
 
     this.activeSession.status = 'completed';
@@ -215,7 +216,7 @@ class ElicitationSessionManager {
     } else if (await fs.pathExists(completedPath)) {
       await fs.remove(completedPath);
     } else {
-      throw new Error(`Session ${sessionId} not found`);
+      throw ErrorFactory.sessionNotFound(sessionId);
     }
 
     // Clear active session if it matches
@@ -243,7 +244,7 @@ class ElicitationSessionManager {
       }
 
       default:
-        throw new Error(`Unsupported export format: ${format}`);
+        throw ErrorFactory.unsupportedExportFormat(format);
     }
   }
 
@@ -297,7 +298,7 @@ class ElicitationSessionManager {
   getSessionPath(sessionId) {
     // Security: Validate sessionId format to prevent path traversal attacks
     if (!this.isValidSessionId(sessionId)) {
-      throw new Error(`Invalid sessionId format: ${sessionId}`);
+      throw ErrorFactory.invalidInput('sessionId', `Invalid format: ${sessionId}`);
     }
     return path.join(this.sessionDir, `${sessionId}.json`);
   }

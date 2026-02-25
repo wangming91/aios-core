@@ -23,6 +23,7 @@
 const fs = require('fs');
 const path = require('path');
 const { EventEmitter } = require('events');
+const { ErrorFactory } = require('../errors');
 
 // Import Epic 8.4 Build State Manager
 const { BuildStateManager } = require('./build-state-manager');
@@ -160,7 +161,7 @@ class AutonomousBuildLoop extends EventEmitter {
    */
   async run(storyId, options = {}) {
     if (this.isRunning) {
-      throw new Error('Build loop is already running');
+      throw ErrorFactory.buildAlreadyCompleted();
     }
 
     this.isRunning = true;
@@ -223,7 +224,7 @@ class AutonomousBuildLoop extends EventEmitter {
       // Load implementation plan
       const plan = await this.loadPlan(storyId, options);
       if (!plan) {
-        throw new Error(`No implementation plan found for ${storyId}`);
+        throw ErrorFactory.fileNotFound(storyId, { type: 'implementation-plan' });
       }
 
       this.stats.totalSubtasks = this.countSubtasks(plan);
@@ -707,7 +708,7 @@ class AutonomousBuildLoop extends EventEmitter {
    */
   async resume(storyId, options = {}) {
     if (this.isRunning) {
-      throw new Error('Build loop is already running');
+      throw ErrorFactory.buildAlreadyCompleted();
     }
 
     // Load state

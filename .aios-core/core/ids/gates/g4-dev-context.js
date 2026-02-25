@@ -20,6 +20,7 @@
  */
 
 const path = require('path');
+const { ErrorFactory } = require('../../errors');
 const { VerificationGate } = require(path.resolve(__dirname, '../verification-gate.js'));
 
 // G4 has stricter timeout since it must be < 2s
@@ -35,7 +36,7 @@ class G4DevContextGate extends VerificationGate {
    */
   constructor(options = {}) {
     if (!options.decisionEngine) {
-      throw new Error('[IDS-G4] decisionEngine is required');
+      throw ErrorFactory.requiredFieldMissing('decisionEngine');
     }
 
     super({

@@ -4,6 +4,7 @@
  * Provides:
  * - AIOSError base class for structured errors
  * - ErrorCodes loader for error definitions
+ * - ErrorFactory for convenient error creation with shortcuts
  * - createError factory function for quick error creation
  * - ErrorFormatter for multi-format error display
  * - RecoveryEngine for auto-fix and recovery suggestions
@@ -11,12 +12,18 @@
  * @module .aios-core/core/errors
  * @see Story STORY-OPT-D1
  * @see Story STORY-OPT-D2
+ * @see Story ERR-001: Unified Error System
  *
  * @example
  * // Import all exports
- * const { AIOSError, ErrorCodes, createError, ErrorFormatter, RecoveryEngine } = require('@aios-core/core/errors');
+ * const { AIOSError, ErrorCodes, ErrorFactory, createError } = require('@aios-core/core/errors');
  *
- * // Create error from error code (recommended)
+ * // Using ErrorFactory shortcuts (recommended)
+ * throw ErrorFactory.fileNotFound('/config.yaml');
+ * throw ErrorFactory.agentNotFound('dev');
+ * throw ErrorFactory.configNotFound();
+ *
+ * // Create error from error code
  * throw createError('CFG_001', { context: { path: '/config.yaml' } });
  *
  * // Create error manually
@@ -25,22 +32,11 @@
  *   severity: 'ERROR',
  *   recoverable: true
  * });
- *
- * // Format error for display
- * const formatter = new ErrorFormatter();
- * console.log(formatter.format(error, { verbose: true }));
- *
- * // Get recovery suggestions
- * const engine = new RecoveryEngine();
- * const suggestions = engine.getRecoverySuggestions(error);
- *
- * // Query error definitions
- * const errorDef = ErrorCodes.getError('CFG_001');
- * const configErrors = ErrorCodes.getErrorsByCategory('CONFIG');
  */
 
 const AIOSError = require('./base-error');
 const ErrorCodes = require('./error-codes');
+const ErrorFactory = require('./error-factory');
 const { ErrorFormatter, formatUserError } = require('./error-formatter');
 const { RecoveryEngine, suggestFix } = require('./recovery-engine');
 
@@ -163,6 +159,7 @@ module.exports = {
   // Classes
   AIOSError,
   ErrorCodes,
+  ErrorFactory,
   ErrorFormatter,
   RecoveryEngine,
 

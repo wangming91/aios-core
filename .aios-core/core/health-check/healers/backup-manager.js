@@ -12,6 +12,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const crypto = require('crypto');
+const { ErrorFactory } = require('../../errors');
 
 /**
  * Default backup directory
@@ -49,7 +50,7 @@ class BackupManager {
     try {
       await fs.mkdir(this.backupDir, { recursive: true });
     } catch (error) {
-      throw new Error(`Failed to create backup directory: ${error.message}`);
+      throw ErrorFactory.create('SYS_001', { operation: 'ensureBackupDir', reason: error.message });
     }
   }
 
@@ -71,7 +72,7 @@ class BackupManager {
       // Check if file exists
       const stats = await fs.stat(absolutePath);
       if (!stats.isFile()) {
-        throw new Error('Target is not a file');
+        throw ErrorFactory.invalidInput('filePath', 'Target is not a file');
       }
 
       // Create backup
@@ -88,7 +89,7 @@ class BackupManager {
 
       return backupPath;
     } catch (error) {
-      throw new Error(`Failed to create backup for ${filePath}: ${error.message}`);
+      throw ErrorFactory.create('SYS_001', { operation: 'createBackup', filePath, reason: error.message });
     }
   }
 
@@ -102,7 +103,7 @@ class BackupManager {
     const backupPath = this.backups.get(absolutePath);
 
     if (!backupPath) {
-      throw new Error(`No backup found for ${filePath}`);
+      throw ErrorFactory.fileNotFound(filePath);
     }
 
     try {
@@ -114,7 +115,7 @@ class BackupManager {
 
       return true;
     } catch (error) {
-      throw new Error(`Failed to restore ${filePath}: ${error.message}`);
+      throw ErrorFactory.create('SYS_001', { operation: 'restoreBackup', filePath, reason: error.message });
     }
   }
 

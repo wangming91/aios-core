@@ -14,6 +14,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
+const { ErrorFactory } = require('../errors');
 
 class PermissionMode {
   /**
@@ -112,7 +113,7 @@ class PermissionMode {
 
     if (!PermissionMode.MODES[mode]) {
       const validModes = Object.keys(PermissionMode.MODES).join(', ');
-      throw new Error(`Invalid mode: "${mode}". Valid modes: ${validModes}`);
+      throw ErrorFactory.invalidInput('mode', `Invalid mode: "${mode}". Valid modes: ${validModes}`);
     }
 
     this.currentMode = mode;

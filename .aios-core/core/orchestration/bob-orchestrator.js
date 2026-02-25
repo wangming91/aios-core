@@ -26,6 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const { ErrorFactory } = require('../errors');
 const { resolveConfig } = require('../config/config-resolver');
 const ExecutorAssignment = require('./executor-assignment');
 const { WorkflowExecutor } = require('./workflow-executor');
@@ -82,7 +83,7 @@ class BobOrchestrator {
    */
   constructor(projectRoot, options = {}) {
     if (!projectRoot || typeof projectRoot !== 'string') {
-      throw new Error('projectRoot is required and must be a string');
+      throw ErrorFactory.requiredFieldMissing('projectRoot');
     }
 
     this.projectRoot = projectRoot;

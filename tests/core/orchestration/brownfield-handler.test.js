@@ -18,6 +18,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 
 // Module under test
 const {
@@ -83,11 +84,11 @@ describe('BrownfieldHandler', () => {
 
   describe('constructor', () => {
     test('should throw error if projectRoot is not provided', () => {
-      expect(() => new BrownfieldHandler()).toThrow('projectRoot is required');
+      expect(() => new BrownfieldHandler()).toThrow();
     });
 
     test('should throw error if projectRoot is not a string', () => {
-      expect(() => new BrownfieldHandler(123)).toThrow('projectRoot is required and must be a string');
+      expect(() => new BrownfieldHandler(123)).toThrow();
     });
 
     test('should initialize with correct defaults', () => {

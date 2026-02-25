@@ -15,6 +15,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+const { ErrorFactory } = require('../errors');
 const { FocusAreaRecommender } = require('./focus-area-recommender');
 const { NotificationManager } = require('./notification-manager');
 
@@ -365,19 +366,19 @@ class HumanReviewOrchestrator {
    */
   validateRequestId(id) {
     if (!id || typeof id !== 'string') {
-      throw new Error('Request ID is required and must be a string');
+      throw ErrorFactory.requiredFieldMissing('requestId');
     }
 
     // Only allow alphanumeric, hyphens, underscores, and dots
     const validIdPattern = /^[A-Za-z0-9_.-]+$/;
     if (!validIdPattern.test(id)) {
-      throw new Error('Invalid request ID: contains disallowed characters');
+      throw ErrorFactory.invalidInput('requestId', 'contains disallowed characters');
     }
 
     // Ensure the ID doesn't resolve outside the intended directory
     const sanitizedId = path.basename(id);
     if (sanitizedId !== id) {
-      throw new Error('Invalid request ID: path traversal detected');
+      throw ErrorFactory.invalidInput('requestId', 'path traversal detected');
     }
 
     return id;
@@ -410,7 +411,7 @@ class HumanReviewOrchestrator {
     const resolvedPath = path.resolve(requestPath);
     const resolvedBase = path.resolve(this.reviewRequestsPath);
     if (!resolvedPath.startsWith(resolvedBase + path.sep)) {
-      throw new Error('Path traversal attempt detected');
+      throw ErrorFactory.invalidInput('path', 'traversal attempt detected');
     }
 
     await fs.mkdir(this.reviewRequestsPath, { recursive: true });
@@ -506,7 +507,7 @@ class HumanReviewOrchestrator {
     const resolvedPath = path.resolve(requestPath);
     const resolvedBase = path.resolve(this.reviewRequestsPath);
     if (!resolvedPath.startsWith(resolvedBase + path.sep)) {
-      throw new Error('Path traversal attempt detected');
+      throw ErrorFactory.invalidInput('path', 'traversal attempt detected');
     }
 
     try {
@@ -521,7 +522,7 @@ class HumanReviewOrchestrator {
 
       return request;
     } catch (error) {
-      throw new Error(`Failed to complete review ${requestId}: ${error.message}`);
+      throw ErrorFactory.create('SYS_001', { operation: 'completeReview', requestId, reason: error.message });
     }
   }
 }

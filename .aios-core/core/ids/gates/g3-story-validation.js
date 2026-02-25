@@ -18,6 +18,7 @@
  */
 
 const path = require('path');
+const { ErrorFactory } = require('../../errors');
 const { VerificationGate } = require(path.resolve(__dirname, '../verification-gate.js'));
 
 class G3StoryValidationGate extends VerificationGate {
@@ -31,10 +32,10 @@ class G3StoryValidationGate extends VerificationGate {
    */
   constructor(options = {}) {
     if (!options.decisionEngine) {
-      throw new Error('[IDS-G3] decisionEngine is required');
+      throw ErrorFactory.requiredFieldMissing('decisionEngine');
     }
     if (!options.registryLoader) {
-      throw new Error('[IDS-G3] registryLoader is required');
+      throw ErrorFactory.requiredFieldMissing('registryLoader');
     }
 
     super({

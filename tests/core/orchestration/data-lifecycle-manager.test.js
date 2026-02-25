@@ -69,9 +69,9 @@ describe('DataLifecycleManager', () => {
     });
 
     it('should throw if projectRoot is missing', () => {
-      expect(() => new DataLifecycleManager()).toThrow('projectRoot is required');
-      expect(() => new DataLifecycleManager('')).toThrow('projectRoot is required');
-      expect(() => new DataLifecycleManager(123)).toThrow('projectRoot is required');
+      expect(() => new DataLifecycleManager()).toThrow('projectRoot');
+      expect(() => new DataLifecycleManager('')).toThrow('projectRoot');
+      expect(() => new DataLifecycleManager(123)).toThrow('projectRoot');
     });
 
     it('should use default options', () => {

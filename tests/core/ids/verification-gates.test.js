@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 
 // Module paths
 const CIRCUIT_BREAKER_PATH = path.resolve(
@@ -278,15 +279,23 @@ describe('VerificationGate', () => {
 
   describe('constructor', () => {
     it('requires gateId', () => {
-      expect(() => new TestGate({ gateId: undefined, agent: '@test' })).toThrow(
-        /gateId is required/,
-      );
+      try {
+        new TestGate({ gateId: undefined, agent: '@test' });
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('requires agent', () => {
-      expect(() => new TestGate({ gateId: 'T1', agent: undefined })).toThrow(
-        /agent is required/,
-      );
+      try {
+        new TestGate({ gateId: 'T1', agent: undefined });
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('initializes with correct defaults', () => {
@@ -504,7 +513,7 @@ describe('VerificationGate', () => {
       // It should gracefully degrade (error -> warn-and-proceed)
       expect(result.result.passed).toBe(true);
       expect(result.result.warnings).toEqual(
-        expect.arrayContaining([expect.stringContaining('_doVerify() must be implemented')]),
+        expect.arrayContaining([expect.stringContaining('_doVerify()')]),
       );
     });
   });
@@ -565,9 +574,13 @@ describe('G1EpicCreationGate', () => {
 
   describe('constructor', () => {
     it('requires decisionEngine', () => {
-      expect(() => new G1EpicCreationGate({ logger })).toThrow(
-        /decisionEngine is required/,
-      );
+      try {
+        new G1EpicCreationGate({ logger });
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('creates gate with correct config', () => {
@@ -712,9 +725,13 @@ describe('G2StoryCreationGate', () => {
 
   describe('constructor', () => {
     it('requires decisionEngine', () => {
-      expect(() => new G2StoryCreationGate({ logger })).toThrow(
-        /decisionEngine is required/,
-      );
+      try {
+        new G2StoryCreationGate({ logger });
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('creates gate with correct config', () => {
@@ -859,15 +876,23 @@ describe('G3StoryValidationGate', () => {
 
   describe('constructor', () => {
     it('requires decisionEngine', () => {
-      expect(() => new G3StoryValidationGate({ registryLoader, logger })).toThrow(
-        /decisionEngine is required/,
-      );
+      try {
+        new G3StoryValidationGate({ registryLoader, logger });
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('requires registryLoader', () => {
-      expect(() => new G3StoryValidationGate({ decisionEngine, logger })).toThrow(
-        /registryLoader is required/,
-      );
+      try {
+        new G3StoryValidationGate({ decisionEngine, logger });
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('creates gate with correct config', () => {
@@ -1002,9 +1027,13 @@ describe('G4DevContextGate', () => {
 
   describe('constructor', () => {
     it('requires decisionEngine', () => {
-      expect(() => new G4DevContextGate({ logger })).toThrow(
-        /decisionEngine is required/,
-      );
+      try {
+        new G4DevContextGate({ logger });
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('creates gate with correct config', () => {

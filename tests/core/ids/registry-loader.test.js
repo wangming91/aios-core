@@ -2,6 +2,7 @@
 
 const path = require('path');
 const { RegistryLoader } = require('../../../.aios-core/core/ids/registry-loader');
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 
 const FIXTURES = path.resolve(__dirname, 'fixtures');
 const VALID_REGISTRY = path.join(FIXTURES, 'valid-registry.yaml');
@@ -51,7 +52,13 @@ describe('RegistryLoader', () => {
     it('throws descriptive error for corrupt YAML', () => {
       const loader = new RegistryLoader(CORRUPT_REGISTRY);
 
-      expect(() => loader.load()).toThrow(/Failed to parse registry/);
+      try {
+        loader.load();
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('CFG_003');
+      }
     });
 
     it('handles registry with empty entities gracefully', () => {

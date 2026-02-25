@@ -12,6 +12,8 @@
  * Source: ADR-IDS-001 — Incremental Development System
  */
 
+const { ErrorFactory } = require('../errors');
+
 const STOP_WORDS = new Set([
   'the', 'a', 'an', 'is', 'are', 'for', 'to', 'of', 'in', 'on',
   'and', 'or', 'but', 'not', 'with', 'that', 'this', 'it', 'be',
@@ -35,7 +37,7 @@ class IncrementalDecisionEngine {
    */
   constructor(registryLoader) {
     if (!registryLoader) {
-      throw new Error('[IDS] IncrementalDecisionEngine requires a RegistryLoader instance');
+      throw ErrorFactory.requiredFieldMissing('registryLoader');
     }
     this._loader = registryLoader;
     this._analysisCache = new Map();
@@ -72,13 +74,13 @@ class IncrementalDecisionEngine {
     try {
       this._loader._ensureLoaded();
     } catch (err) {
-      throw new Error(`[IDS] Failed to load registry: ${err.message}`);
+      throw ErrorFactory.idsRegistryLoadFailed(err.message);
     }
     let allEntities;
     try {
       allEntities = this._loader._getAllEntities();
     } catch (err) {
-      throw new Error(`[IDS] Failed to retrieve entities: ${err.message}`);
+      throw ErrorFactory.idsEntitiesRetrieveFailed(err.message);
     }
     const totalEntities = allEntities.length;
 
@@ -507,13 +509,13 @@ class IncrementalDecisionEngine {
     try {
       this._loader._ensureLoaded();
     } catch (err) {
-      throw new Error(`[IDS] Failed to load registry: ${err.message}`);
+      throw ErrorFactory.idsRegistryLoadFailed(err.message);
     }
     let allEntities;
     try {
       allEntities = this._loader._getAllEntities();
     } catch (err) {
-      throw new Error(`[IDS] Failed to retrieve entities: ${err.message}`);
+      throw ErrorFactory.idsEntitiesRetrieveFailed(err.message);
     }
     const now = new Date();
     const report = {

@@ -18,6 +18,7 @@
  */
 
 const { CircuitBreaker } = require('./circuit-breaker');
+const { ErrorFactory } = require('../errors');
 
 const DEFAULT_TIMEOUT_MS = 2000;
 
@@ -56,10 +57,10 @@ class VerificationGate {
    */
   constructor(config = {}) {
     if (!config.gateId) {
-      throw new Error('[IDS-Gate] gateId is required');
+      throw ErrorFactory.requiredFieldMissing('gateId');
     }
     if (!config.agent) {
-      throw new Error('[IDS-Gate] agent is required');
+      throw ErrorFactory.requiredFieldMissing('agent');
     }
 
     this._gateId = config.gateId;
@@ -218,9 +219,7 @@ class VerificationGate {
    * @abstract
    */
   async _doVerify(_context) {
-    throw new Error(
-      `[IDS-Gate] _doVerify() must be implemented by subclass (gate: ${this._gateId})`,
-    );
+    throw ErrorFactory.featureNotImplemented(`_doVerify() for gate ${this._gateId}`);
   }
 
   // ================================================================

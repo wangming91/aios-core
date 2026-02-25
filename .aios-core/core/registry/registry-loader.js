@@ -11,6 +11,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+const { ErrorFactory } = require('../errors');
 
 // Cache configuration
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
@@ -66,7 +67,7 @@ class ServiceRegistry {
 
       return this.cache;
     } catch (error) {
-      throw new Error(`Failed to load registry: ${error.message}`);
+      throw ErrorFactory.create('SYS_001', { operation: 'loadRegistry', reason: error.message });
     }
   }
 

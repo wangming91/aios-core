@@ -10,6 +10,7 @@
 
 const { execSync } = require('child_process');
 const os = require('os');
+const { ErrorFactory } = require('../../../errors');
 const { BaseCheck, CheckSeverity, CheckDomain } = require('../../base-check');
 
 /**
@@ -186,7 +187,7 @@ class DiskSpaceCheck extends BaseCheck {
       };
     }
 
-    throw new Error('Could not parse df output');
+    throw ErrorFactory.create('SYS_001', { operation: 'parseDfOutput', reason: 'Could not parse df output' });
   }
 
   /**

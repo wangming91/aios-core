@@ -22,6 +22,7 @@
 const fs = require('fs');
 const path = require('path');
 const EventEmitter = require('events');
+const { ErrorFactory } = require('../errors');
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 //                              GREENFIELD CONSTANTS
@@ -95,7 +96,7 @@ class GreenfieldHandler extends EventEmitter {
     super();
 
     if (!projectRoot || typeof projectRoot !== 'string') {
-      throw new Error('projectRoot is required and must be a string');
+      throw ErrorFactory.requiredFieldMissing('projectRoot');
     }
 
     this.projectRoot = projectRoot;

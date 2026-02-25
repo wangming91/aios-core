@@ -9,6 +9,8 @@
  * @story 2.10 - Quality Gate Manager
  */
 
+const { ErrorFactory } = require('../errors');
+
 /**
  * Base class for quality gate layers
  * @abstract
@@ -21,7 +23,7 @@ class BaseLayer {
    */
   constructor(name, config = {}) {
     if (new.target === BaseLayer) {
-      throw new Error('BaseLayer is abstract and cannot be instantiated directly');
+      throw ErrorFactory.featureNotImplemented('BaseLayer', 'BaseLayer is abstract and cannot be instantiated directly');
     }
     this.name = name;
     this.config = config;
@@ -38,7 +40,7 @@ class BaseLayer {
    * @returns {Promise<Object>} Layer results
    */
   async execute(_context) {
-    throw new Error('execute() must be implemented by subclass');
+    throw ErrorFactory.featureNotImplemented('execute', 'execute() must be implemented by subclass');
   }
 
   /**

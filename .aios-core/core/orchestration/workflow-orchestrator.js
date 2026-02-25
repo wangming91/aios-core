@@ -13,6 +13,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
 const chalk = require('chalk');
+const { ErrorFactory } = require('../errors');
 
 const SubagentPromptBuilder = require('./subagent-prompt-builder');
 const ContextManager = require('./context-manager');
@@ -95,7 +96,7 @@ class WorkflowOrchestrator {
 
       return this.workflow;
     } catch (error) {
-      throw new Error(`Failed to load workflow: ${error.message}`);
+      throw ErrorFactory.create('SYS_001', { operation: 'loadWorkflow', reason: error.message });
     }
   }
 
@@ -161,7 +162,7 @@ class WorkflowOrchestrator {
         } catch (error) {
           results.errors.push({ action, error: error.message });
           if (action.blocking !== false) {
-            throw new Error(`Pre-action failed: ${action.type} - ${error.message}`);
+            throw ErrorFactory.create('SYS_001', { operation: 'preAction', type: action.type, reason: error.message });
           }
         }
       }
@@ -198,7 +199,7 @@ class WorkflowOrchestrator {
           }
         }
         if (missing.length > 0 && action.blocking !== false) {
-          throw new Error(`Missing environment variables: ${missing.join(', ')}`);
+          throw ErrorFactory.create('SYS_001', { operation: 'checkEnv', missing: missing.join(', ') });
         }
         return { success: missing.length === 0, missing };
       }
@@ -206,7 +207,7 @@ class WorkflowOrchestrator {
       case 'file_exists': {
         const exists = await fs.pathExists(path.join(this.options.projectRoot, action.path));
         if (!exists && action.blocking !== false) {
-          throw new Error(`Required file not found: ${action.path}`);
+          throw ErrorFactory.fileNotFound(action.path);
         }
         return { success: exists };
       }

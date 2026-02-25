@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const lockfile = require('proper-lockfile');
+const { ErrorFactory } = require('../errors');
 const { RegistryLoader } = require(path.resolve(__dirname, 'registry-loader.js'));
 const {
   extractEntityId,
@@ -452,7 +453,7 @@ class RegistryUpdater {
         console.error('[IDS-Updater] Disk full — registry write failed. Retrying not possible.');
         throw err;
       }
-      throw new Error(`[IDS-Updater] Failed to write registry: ${err.message}`);
+      throw ErrorFactory.idsRegistryWriteFailed(err.message);
     }
   }
 
@@ -480,7 +481,7 @@ class RegistryUpdater {
         lockfilePath: this._lockFile,
       });
     } catch (err) {
-      throw new Error(`[IDS-Updater] Could not acquire lock: ${err.message}`);
+      throw ErrorFactory.idsLockAcquireFailed(err.message);
     }
 
     try {

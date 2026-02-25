@@ -1,6 +1,6 @@
 # AIOS Error Codes Definition
-# Version: 1.0.0
-# Last Updated: 2026-02-20
+# Version: 2.0.0
+# Last Updated: 2026-02-24
 #
 # This file defines all error codes used in AIOS.
 # Each error code includes:
@@ -14,9 +14,9 @@
 # - docUrl: Optional URL to documentation
 
 metadata:
-  version: "1.0.0"
-  lastUpdated: "2026-02-20"
-  description: "AIOS Error Codes Definition File"
+  version: "2.0.0"
+  lastUpdated: "2026-02-24"
+  description: "AIOS Error Codes Definition File - Extended Edition"
 
 # Error Categories
 categories:
@@ -40,10 +40,34 @@ categories:
     name: "IDS"
     description: "Incremental Decision System errors"
     prefix: "IDS"
+  FIL:
+    name: "File"
+    description: "File operation errors"
+    prefix: "FIL"
+  GIT:
+    name: "Git"
+    description: "Git operation errors"
+    prefix: "GIT"
+  NET:
+    name: "Network"
+    description: "Network and API errors"
+    prefix: "NET"
+  VAL:
+    name: "Validation"
+    description: "Input validation errors"
+    prefix: "VAL"
+  PRJ:
+    name: "Project"
+    description: "Project management errors"
+    prefix: "PRJ"
   GEN:
     name: "General"
     description: "General errors"
     prefix: "GEN"
+  BLD:
+    name: "Build"
+    description: "Build process errors"
+    prefix: "BLD"
 
 # Error Code Definitions
 codes:
@@ -274,6 +298,138 @@ codes:
       - "Restore from backup if available"
     docUrl: "https://docs.aios.dev/errors/IDS_003"
 
+  IDS_004:
+    code: "IDS_004"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Failed to load IDS registry: {reason}"
+    userMessage: "Could not load the decision registry"
+    recoverable: true
+    recoverySteps:
+      - "Check if the registry file exists and is readable"
+      - "Verify YAML syntax is valid"
+      - "Check file permissions"
+    docUrl: "https://docs.aios.dev/errors/IDS_004"
+
+  IDS_005:
+    code: "IDS_005"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Failed to retrieve entities from registry: {reason}"
+    userMessage: "Could not retrieve entities from the decision registry"
+    recoverable: true
+    recoverySteps:
+      - "Verify registry structure is valid"
+      - "Check for corrupted entity data"
+      - "Run 'aios ids validate' to diagnose issues"
+    docUrl: "https://docs.aios.dev/errors/IDS_005"
+
+  IDS_006:
+    code: "IDS_006"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Failed to write IDS registry: {reason}"
+    userMessage: "Could not save changes to the decision registry"
+    recoverable: true
+    recoverySteps:
+      - "Check file write permissions"
+      - "Verify disk space is available"
+      - "Ensure no other process is locking the file"
+    docUrl: "https://docs.aios.dev/errors/IDS_006"
+
+  IDS_007:
+    code: "IDS_007"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Could not acquire registry lock: {reason}"
+    userMessage: "Registry is busy or locked by another process"
+    recoverable: true
+    recoverySteps:
+      - "Wait a moment and try again"
+      - "Check for other AIOS processes"
+      - "Remove stale lock file if present"
+    docUrl: "https://docs.aios.dev/errors/IDS_007"
+
+  IDS_008:
+    code: "IDS_008"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Failed to create registry backup: {reason}"
+    userMessage: "Could not create backup before modification"
+    recoverable: true
+    recoverySteps:
+      - "Check backup directory permissions"
+      - "Verify disk space is available"
+      - "Try manual backup"
+    docUrl: "https://docs.aios.dev/errors/IDS_008"
+
+  IDS_009:
+    code: "IDS_009"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Registry backup not found: {batchId}"
+    userMessage: "Requested backup does not exist"
+    recoverable: true
+    recoverySteps:
+      - "Check if backup ID is correct"
+      - "List available backups with 'aios ids backups'"
+      - "Create a new backup if needed"
+    docUrl: "https://docs.aios.dev/errors/IDS_009"
+
+  IDS_010:
+    code: "IDS_010"
+    category: "IDS"
+    severity: "ERROR"
+    message: "Registry rollback failed: {reason}"
+    userMessage: "Could not restore registry from backup"
+    recoverable: true
+    recoverySteps:
+      - "Check if backup file is valid"
+      - "Verify file permissions"
+      - "Try manual restore"
+    docUrl: "https://docs.aios.dev/errors/IDS_010"
+
+  # ===========================================
+  # SESSION ERRORS (SES_xxx)
+  # ===========================================
+
+  SES_001:
+    code: "SES_001"
+    category: "SESSION"
+    severity: "ERROR"
+    message: "No active session found"
+    userMessage: "No active session exists"
+    recoverable: true
+    recoverySteps:
+      - "Create a new session first"
+      - "Check if session was already closed"
+    docUrl: "https://docs.aios.dev/errors/SES_001"
+
+  SES_002:
+    code: "SES_002"
+    category: "SESSION"
+    severity: "ERROR"
+    message: "Session not found: {sessionId}"
+    userMessage: "The requested session does not exist"
+    recoverable: true
+    recoverySteps:
+      - "Check if session ID is correct"
+      - "List available sessions"
+      - "Create a new session if needed"
+    docUrl: "https://docs.aios.dev/errors/SES_002"
+
+  SES_003:
+    code: "SES_003"
+    category: "SESSION"
+    severity: "ERROR"
+    message: "Unsupported export format: {format}"
+    userMessage: "The requested export format is not supported"
+    recoverable: true
+    recoverySteps:
+      - "Use a supported format (json, yaml, markdown)"
+      - "Check documentation for available formats"
+    docUrl: "https://docs.aios.dev/errors/SES_003"
+
   # ===========================================
   # GENERAL ERRORS (GEN_xxx)
   # ===========================================
@@ -290,3 +446,419 @@ codes:
       - "Check AIOS logs for details"
       - "Report the issue if problem persists"
     docUrl: null
+
+  GEN_002:
+    code: "GEN_002"
+    category: "GENERAL"
+    severity: "ERROR"
+    message: "Operation cancelled by user"
+    userMessage: "Operation was cancelled"
+    recoverable: true
+    recoverySteps:
+      - "Retry the operation if needed"
+    docUrl: null
+
+  GEN_003:
+    code: "GEN_003"
+    category: "GENERAL"
+    severity: "WARNING"
+    message: "Feature {feature} is not implemented yet"
+    userMessage: "This feature is coming soon"
+    recoverable: false
+    recoverySteps:
+      - "Check the roadmap for planned release"
+      - "Use alternative methods if available"
+    docUrl: null
+
+  # ===========================================
+  # FILE ERRORS (FIL_xxx)
+  # ===========================================
+
+  FIL_001:
+    code: "FIL_001"
+    category: "FILE"
+    severity: "ERROR"
+    message: "File not found: {path}"
+    userMessage: "File '{path}' does not exist"
+    recoverable: true
+    recoverySteps:
+      - "Check if the file path is correct"
+      - "Verify the file has not been moved or deleted"
+      - "Create the file if it should exist"
+    docUrl: "https://docs.aios.dev/errors/FIL_001"
+
+  FIL_002:
+    code: "FIL_002"
+    category: "FILE"
+    severity: "ERROR"
+    message: "Cannot read file: {path}"
+    userMessage: "Failed to read file '{path}'"
+    recoverable: true
+    recoverySteps:
+      - "Check file permissions"
+      - "Verify the file is not corrupted"
+      - "Ensure the file is not locked by another process"
+    docUrl: "https://docs.aios.dev/errors/FIL_002"
+
+  FIL_003:
+    code: "FIL_003"
+    category: "FILE"
+    severity: "ERROR"
+    message: "Cannot write file: {path}"
+    userMessage: "Failed to write to file '{path}'"
+    recoverable: true
+    recoverySteps:
+      - "Check file permissions"
+      - "Verify disk space is available"
+      - "Ensure parent directory exists"
+    docUrl: "https://docs.aios.dev/errors/FIL_003"
+
+  FIL_004:
+    code: "FIL_004"
+    category: "FILE"
+    severity: "ERROR"
+    message: "Directory not found: {path}"
+    userMessage: "Directory '{path}' does not exist"
+    recoverable: true
+    recoverySteps:
+      - "Create the directory with 'mkdir -p {path}'"
+      - "Check if the path is correct"
+    docUrl: "https://docs.aios.dev/errors/FIL_004"
+
+  FIL_005:
+    code: "FIL_005"
+    category: "FILE"
+    severity: "ERROR"
+    message: "Invalid file format: {format}"
+    userMessage: "File format '{format}' is not supported"
+    recoverable: true
+    recoverySteps:
+      - "Use a supported file format"
+      - "Convert the file to a supported format"
+    docUrl: "https://docs.aios.dev/errors/FIL_005"
+
+  # ===========================================
+  # GIT ERRORS (GIT_xxx)
+  # ===========================================
+
+  GIT_001:
+    code: "GIT_001"
+    category: "GIT"
+    severity: "ERROR"
+    message: "Not a git repository"
+    userMessage: "This directory is not a git repository"
+    recoverable: true
+    recoverySteps:
+      - "Run 'git init' to initialize a repository"
+      - "Navigate to a directory that contains a git repository"
+    docUrl: "https://docs.aios.dev/errors/GIT_001"
+
+  GIT_002:
+    code: "GIT_002"
+    category: "GIT"
+    severity: "ERROR"
+    message: "Git merge conflict in {files}"
+    userMessage: "Merge conflicts detected"
+    recoverable: true
+    recoverySteps:
+      - "Resolve conflicts in the affected files"
+      - "Run 'git add' on resolved files"
+      - "Complete the merge with 'git commit'"
+    docUrl: "https://docs.aios.dev/errors/GIT_002"
+
+  GIT_003:
+    code: "GIT_003"
+    category: "GIT"
+    severity: "ERROR"
+    message: "Git push rejected: {reason}"
+    userMessage: "Push was rejected by remote"
+    recoverable: true
+    recoverySteps:
+      - "Pull latest changes with 'git pull'"
+      - "Resolve any conflicts"
+      - "Try pushing again"
+    docUrl: "https://docs.aios.dev/errors/GIT_003"
+
+  GIT_004:
+    code: "GIT_004"
+    category: "GIT"
+    severity: "WARNING"
+    message: "Uncommitted changes detected"
+    userMessage: "You have uncommitted changes"
+    recoverable: true
+    recoverySteps:
+      - "Commit your changes first"
+      - "Or stash them with 'git stash'"
+    docUrl: "https://docs.aios.dev/errors/GIT_004"
+
+  GIT_005:
+    code: "GIT_005"
+    category: "GIT"
+    severity: "ERROR"
+    message: "Branch {branch} not found"
+    userMessage: "Branch '{branch}' does not exist"
+    recoverable: true
+    recoverySteps:
+      - "Check branch name spelling"
+      - "Run 'git branch -a' to list all branches"
+      - "Create the branch if needed"
+    docUrl: "https://docs.aios.dev/errors/GIT_005"
+
+  # ===========================================
+  # NETWORK ERRORS (NET_xxx)
+  # ===========================================
+
+  NET_001:
+    code: "NET_001"
+    category: "NETWORK"
+    severity: "ERROR"
+    message: "Network request failed: {url}"
+    userMessage: "Failed to connect to {url}"
+    recoverable: true
+    recoverySteps:
+      - "Check your internet connection"
+      - "Verify the URL is correct"
+      - "Try again later"
+    docUrl: "https://docs.aios.dev/errors/NET_001"
+
+  NET_002:
+    code: "NET_002"
+    category: "NETWORK"
+    severity: "ERROR"
+    message: "API rate limit exceeded"
+    userMessage: "Too many requests, please wait"
+    recoverable: true
+    recoverySteps:
+      - "Wait a few minutes before retrying"
+      - "Consider reducing request frequency"
+    docUrl: "https://docs.aios.dev/errors/NET_002"
+
+  NET_003:
+    code: "NET_003"
+    category: "NETWORK"
+    severity: "ERROR"
+    message: "Authentication failed for {service}"
+    userMessage: "Failed to authenticate with {service}"
+    recoverable: true
+    recoverySteps:
+      - "Check your credentials"
+      - "Verify API keys are valid"
+      - "Run authentication setup again"
+    docUrl: "https://docs.aios.dev/errors/NET_003"
+
+  NET_004:
+    code: "NET_004"
+    category: "NETWORK"
+    severity: "ERROR"
+    message: "Request timeout after {seconds}s"
+    userMessage: "Request took too long"
+    recoverable: true
+    recoverySteps:
+      - "Check your network connection"
+      - "Try again with a simpler request"
+      - "Increase timeout if needed"
+    docUrl: "https://docs.aios.dev/errors/NET_004"
+
+  # ===========================================
+  # VALIDATION ERRORS (VAL_xxx)
+  # ===========================================
+
+  VAL_001:
+    code: "VAL_001"
+    category: "VALIDATION"
+    severity: "ERROR"
+    message: "Invalid input: {field} - {reason}"
+    userMessage: "Invalid value for '{field}'"
+    recoverable: true
+    recoverySteps:
+      - "Check the value of '{field}'"
+      - "Refer to documentation for valid values"
+    docUrl: "https://docs.aios.dev/errors/VAL_001"
+
+  VAL_002:
+    code: "VAL_002"
+    category: "VALIDATION"
+    severity: "ERROR"
+    message: "Required field missing: {field}"
+    userMessage: "Field '{field}' is required"
+    recoverable: true
+    recoverySteps:
+      - "Provide a value for '{field}'"
+      - "Check required fields in documentation"
+    docUrl: "https://docs.aios.dev/errors/VAL_002"
+
+  VAL_003:
+    code: "VAL_003"
+    category: "VALIDATION"
+    severity: "ERROR"
+    message: "Value out of range: {field} must be between {min} and {max}"
+    userMessage: "Value for '{field}' is out of valid range"
+    recoverable: true
+    recoverySteps:
+      - "Use a value between {min} and {max}"
+    docUrl: "https://docs.aios.dev/errors/VAL_003"
+
+  VAL_004:
+    code: "VAL_004"
+    category: "VALIDATION"
+    severity: "ERROR"
+    message: "Invalid type for {field}: expected {expected}, got {actual}"
+    userMessage: "Wrong type for '{field}'"
+    recoverable: true
+    recoverySteps:
+      - "Provide a value of type {expected}"
+    docUrl: "https://docs.aios.dev/errors/VAL_004"
+
+  VAL_005:
+    code: "VAL_005"
+    category: "VALIDATION"
+    severity: "ERROR"
+    message: "Duplicate value: {field} must be unique"
+    userMessage: "Value for '{field}' already exists"
+    recoverable: true
+    recoverySteps:
+      - "Use a different value"
+      - "Update existing record instead"
+    docUrl: "https://docs.aios.dev/errors/VAL_005"
+
+  # ===========================================
+  # PROJECT ERRORS (PRJ_xxx)
+  # ===========================================
+
+  PRJ_001:
+    code: "PRJ_001"
+    category: "PROJECT"
+    severity: "ERROR"
+    message: "Project not initialized"
+    userMessage: "This project has not been initialized"
+    recoverable: true
+    recoverySteps:
+      - "Run 'aios init' to initialize the project"
+      - "Or navigate to an initialized project"
+    docUrl: "https://docs.aios.dev/errors/PRJ_001"
+
+  PRJ_002:
+    code: "PRJ_002"
+    category: "PROJECT"
+    severity: "ERROR"
+    message: "Project version mismatch: expected {expected}, found {actual}"
+    userMessage: "Project version is incompatible"
+    recoverable: true
+    recoverySteps:
+      - "Update AIOS to the latest version"
+      - "Or migrate the project to current version"
+    docUrl: "https://docs.aios.dev/errors/PRJ_002"
+
+  PRJ_003:
+    code: "PRJ_003"
+    category: "PROJECT"
+    severity: "WARNING"
+    message: "Project has {count} warnings"
+    userMessage: "Project has some issues that should be addressed"
+    recoverable: true
+    recoverySteps:
+      - "Run 'aios doctor' for details"
+      - "Fix warnings to ensure optimal performance"
+    docUrl: "https://docs.aios.dev/errors/PRJ_003"
+
+  PRJ_004:
+    code: "PRJ_004"
+    category: "PROJECT"
+    severity: "ERROR"
+    message: "Dependency {name} not found"
+    userMessage: "Required dependency '{name}' is missing"
+    recoverable: true
+    recoverySteps:
+      - "Install the dependency"
+      - "Run 'npm install' or equivalent"
+    docUrl: "https://docs.aios.dev/errors/PRJ_004"
+
+  PRJ_005:
+    code: "PRJ_005"
+    category: "PROJECT"
+    severity: "ERROR"
+    message: "Module {module} failed to load: {reason}"
+    userMessage: "Failed to load module '{module}'"
+    recoverable: true
+    recoverySteps:
+      - "Check if the module is installed"
+      - "Verify module compatibility"
+      - "Check for syntax errors in module"
+    docUrl: "https://docs.aios.dev/errors/PRJ_005"
+
+  # ===========================================
+  # BUILD ERRORS (BLD_xxx)
+  # ===========================================
+
+  BLD_001:
+    code: "BLD_001"
+    category: "BUILD"
+    severity: "ERROR"
+    message: "Build state not found for {storyId}"
+    userMessage: "No build state found for story '{storyId}'"
+    recoverable: true
+    recoverySteps:
+      - "Create a new build state with 'aios build create'"
+      - "Check if the story ID is correct"
+    docUrl: "https://docs.aios.dev/errors/BLD_001"
+
+  BLD_002:
+    code: "BLD_002"
+    category: "BUILD"
+    severity: "ERROR"
+    message: "Build already completed"
+    userMessage: "This build has already been completed"
+    recoverable: false
+    recoverySteps:
+      - "Start a new build if needed"
+      - "Check build status with 'aios build status'"
+    docUrl: "https://docs.aios.dev/errors/BLD_002"
+
+  BLD_003:
+    code: "BLD_003"
+    category: "BUILD"
+    severity: "ERROR"
+    message: "Build state not loaded"
+    userMessage: "Build state has not been loaded"
+    recoverable: true
+    recoverySteps:
+      - "Call loadState() or createState() first"
+      - "Check if the build state file exists"
+    docUrl: "https://docs.aios.dev/errors/BLD_003"
+
+  BLD_004:
+    code: "BLD_004"
+    category: "BUILD"
+    severity: "ERROR"
+    message: "Invalid build state: {errors}"
+    userMessage: "Build state is invalid"
+    recoverable: true
+    recoverySteps:
+      - "Check build state file for corruption"
+      - "Delete and recreate the build state"
+    docUrl: "https://docs.aios.dev/errors/BLD_004"
+
+  BLD_005:
+    code: "BLD_005"
+    category: "BUILD"
+    severity: "ERROR"
+    message: "Failed to load build state: {reason}"
+    userMessage: "Could not load build state"
+    recoverable: true
+    recoverySteps:
+      - "Check if the state file exists and is readable"
+      - "Verify JSON format is valid"
+      - "Delete corrupted state and start fresh"
+    docUrl: "https://docs.aios.dev/errors/BLD_005"
+
+  BLD_006:
+    code: "BLD_006"
+    category: "BUILD"
+    severity: "WARNING"
+    message: "Build abandoned: {reason}"
+    userMessage: "Build was abandoned due to inactivity"
+    recoverable: true
+    recoverySteps:
+      - "Resume the build with 'aios build resume'"
+      - "Start a fresh build if needed"
+    docUrl: "https://docs.aios.dev/errors/BLD_006"

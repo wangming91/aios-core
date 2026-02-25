@@ -14,6 +14,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
+const { ErrorFactory } = require('../errors');
 const { Layer1PreCommit } = require('./layer1-precommit');
 const { Layer2PRAutomation } = require('./layer2-pr-automation');
 const { Layer3HumanReview } = require('./layer3-human-review');
@@ -78,7 +79,7 @@ class QualityGateManager {
 
     const layerKey = layerMap[layerNum];
     if (!layerKey) {
-      throw new Error(`Invalid layer number: ${layerNum}. Use 1, 2, or 3.`);
+      throw ErrorFactory.invalidInput('layerNum', `Invalid layer number: ${layerNum}. Use 1, 2, or 3.`);
     }
 
     const layer = this.layers[layerKey];

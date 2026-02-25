@@ -12,6 +12,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 const os = require('os');
+const { isAIOSError } = require('../../.aios-core/core/errors');
 
 // Module under test
 const TerminalSpawner = require('../../.aios-core/core/orchestration/terminal-spawner');
@@ -196,9 +197,13 @@ describe('TerminalSpawner', () => {
       await fs.writeFile(lockPath, '');
 
       try {
-        await expect(TerminalSpawner.pollForOutput(outputPath, 600)).rejects.toThrow(
-          /Timeout waiting for agent output/,
-        );
+        try {
+          await TerminalSpawner.pollForOutput(outputPath, 600);
+          fail('Expected AIOSError to be thrown');
+        } catch (error) {
+          expect(isAIOSError(error)).toBe(true);
+          expect(error.code).toBe('SYS_001');
+        }
       } finally {
         await fs.unlink(lockPath).catch(() => {});
       }
@@ -283,25 +288,43 @@ describe('TerminalSpawner', () => {
   // ============================================
   describe('spawnAgent Validation', () => {
     test('should reject invalid agent ID', async () => {
-      await expect(TerminalSpawner.spawnAgent('', 'develop')).rejects.toThrow(
-        /Agent ID is required/,
-      );
+      try {
+        await TerminalSpawner.spawnAgent('', 'develop');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     test('should reject invalid task', async () => {
-      await expect(TerminalSpawner.spawnAgent('dev', '')).rejects.toThrow(/Task is required/);
+      try {
+        await TerminalSpawner.spawnAgent('dev', '');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     test('should reject agent ID with invalid characters', async () => {
-      await expect(TerminalSpawner.spawnAgent('dev@123', 'develop')).rejects.toThrow(
-        /Invalid agent ID format/,
-      );
+      try {
+        await TerminalSpawner.spawnAgent('dev@123', 'develop');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_001');
+      }
     });
 
     test('should reject task with invalid characters', async () => {
-      await expect(TerminalSpawner.spawnAgent('dev', 'develop!test')).rejects.toThrow(
-        /Invalid task format/,
-      );
+      try {
+        await TerminalSpawner.spawnAgent('dev', 'develop!test');
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_001');
+      }
     });
 
     test('should accept valid agent ID formats', async () => {

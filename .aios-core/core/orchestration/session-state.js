@@ -18,6 +18,7 @@
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
+const { ErrorFactory } = require('../errors');
 const yaml = require('js-yaml');
 
 // Constants
@@ -227,7 +228,7 @@ class SessionState {
    */
   async updateSessionState(updates) {
     if (!this.state) {
-      throw new Error('Session state not initialized. Call loadSessionState() or createSessionState() first.');
+      throw ErrorFactory.noActiveSession();
     }
 
     const now = new Date().toISOString();
@@ -376,7 +377,7 @@ class SessionState {
    */
   async setSessionOverride(key, value) {
     if (!this.state) {
-      throw new Error('Session state not initialized. Call loadSessionState() or createSessionState() first.');
+      throw ErrorFactory.noActiveSession();
     }
 
     const now = new Date().toISOString();
@@ -594,7 +595,7 @@ O que você quer fazer?
         };
 
       default:
-        throw new Error(`Unknown resume option: ${option}`);
+        throw ErrorFactory.invalidInput('resumeOption', `Unknown: ${option}`);
     }
   }
 
@@ -749,7 +750,7 @@ O que você quer fazer?
    */
   async save() {
     if (!this.state) {
-      throw new Error('No state to save');
+      throw ErrorFactory.noActiveSession();
     }
 
     // Ensure directory exists

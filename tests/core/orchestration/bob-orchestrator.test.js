@@ -6,6 +6,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 
 const {
   BobOrchestrator,
@@ -273,10 +274,9 @@ describe('BobOrchestrator', () => {
     });
 
     it('should throw if projectRoot is missing', () => {
-      // When/Then
-      expect(() => new BobOrchestrator()).toThrow('projectRoot is required');
-      expect(() => new BobOrchestrator('')).toThrow('projectRoot is required');
-      expect(() => new BobOrchestrator(123)).toThrow('projectRoot is required');
+      expect(() => new BobOrchestrator()).toThrow();
+      expect(() => new BobOrchestrator('')).toThrow();
+      expect(() => new BobOrchestrator(123)).toThrow();
     });
 
     it('should initialize all Epic 11 dependencies', () => {

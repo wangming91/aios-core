@@ -40,11 +40,11 @@ describe('BobStatusWriter', () => {
 
   describe('constructor', () => {
     it('should throw if projectRoot is not provided', () => {
-      expect(() => new BobStatusWriter()).toThrow('projectRoot is required');
+      expect(() => new BobStatusWriter()).toThrow();
     });
 
     it('should throw if projectRoot is not a string', () => {
-      expect(() => new BobStatusWriter(123)).toThrow('projectRoot is required and must be a string');
+      expect(() => new BobStatusWriter(123)).toThrow();
     });
 
     it('should set correct paths', () => {

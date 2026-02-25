@@ -12,6 +12,8 @@
  * @author @dev (Dex)
  */
 
+const { ErrorFactory } = require('../../errors');
+
 /**
  * Execution status enum
  * @enum {string}
@@ -58,7 +60,7 @@ class EpicExecutor {
    * @abstract
    */
   async execute(_context) {
-    throw new Error(`${this.constructor.name} must implement execute()`);
+    throw ErrorFactory.featureNotImplemented('execute', `${this.constructor.name} must implement execute()`);
   }
 
   /**
@@ -218,7 +220,7 @@ class EpicExecutor {
   _validateContext(context, required) {
     const missing = required.filter((field) => context[field] === undefined);
     if (missing.length > 0) {
-      throw new Error(`Missing required context fields: ${missing.join(', ')}`);
+      throw ErrorFactory.requiredFieldMissing(missing.join(', '));
     }
   }
 

@@ -23,6 +23,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { ErrorFactory } = require('../errors');
 
 // Optional dependencies with graceful fallback
 let chalk;
@@ -154,7 +155,7 @@ class BuildStateManager {
    */
   constructor(storyId, options = {}) {
     if (!storyId) {
-      throw new Error('storyId is required');
+      throw ErrorFactory.requiredFieldMissing('storyId');
     }
 
     this.storyId = storyId;
@@ -231,7 +232,7 @@ class BuildStateManager {
     // Validate before saving
     const validation = validateBuildState(state);
     if (!validation.valid) {
-      throw new Error(`Invalid state: ${validation.errors.join(', ')}`);
+      throw ErrorFactory.invalidBuildState(validation.errors.join(', '));
     }
 
     this._state = state;
@@ -255,13 +256,14 @@ class BuildStateManager {
       // Validate
       const validation = validateBuildState(state);
       if (!validation.valid) {
-        throw new Error(`Invalid state file: ${validation.errors.join(', ')}`);
+        throw ErrorFactory.invalidBuildState(validation.errors.join(', '));
       }
 
       this._state = state;
       return state;
     } catch (error) {
-      throw new Error(`Failed to load build state: ${error.message}`);
+      if (error.name === 'AIOSError') throw error;
+      throw ErrorFactory.buildStateLoadFailed(error.message);
     }
   }
 
@@ -274,7 +276,7 @@ class BuildStateManager {
    */
   saveState(options = {}) {
     if (!this._state) {
-      throw new Error('No state to save. Call createState() or loadState() first.');
+      throw ErrorFactory.buildStateNotLoaded();
     }
 
     // Ensure directory exists
@@ -290,7 +292,7 @@ class BuildStateManager {
     // Validate before saving
     const validation = validateBuildState(this._state);
     if (!validation.valid) {
-      throw new Error(`Invalid state: ${validation.errors.join(', ')}`);
+      throw ErrorFactory.invalidBuildState(validation.errors.join(', '));
     }
 
     // Write state file
@@ -338,7 +340,7 @@ class BuildStateManager {
    */
   saveCheckpoint(subtaskId, options = {}) {
     if (!this._state) {
-      throw new Error('No state loaded');
+      throw ErrorFactory.buildStateNotLoaded();
     }
 
     // Ensure checkpoint directory exists
@@ -439,12 +441,12 @@ class BuildStateManager {
     const state = this.loadState();
 
     if (!state) {
-      throw new Error(`No build state found for ${this.storyId}`);
+      throw ErrorFactory.buildStateNotFound(this.storyId);
     }
 
     // Check if build can be resumed
     if (state.status === BuildStatus.COMPLETED) {
-      throw new Error('Build already completed');
+      throw ErrorFactory.buildAlreadyCompleted();
     }
 
     if (state.status === BuildStatus.FAILED) {
@@ -778,7 +780,7 @@ class BuildStateManager {
    */
   recordFailure(subtaskId, options = {}) {
     if (!this._state) {
-      throw new Error('No state loaded');
+      throw ErrorFactory.buildStateNotLoaded();
     }
 
     const failure = {
@@ -993,7 +995,7 @@ class BuildStateManager {
    */
   startSubtask(subtaskId, options = {}) {
     if (!this._state) {
-      throw new Error('No state loaded');
+      throw ErrorFactory.buildStateNotLoaded();
     }
 
     this._state.currentSubtask = subtaskId;
@@ -1018,7 +1020,7 @@ class BuildStateManager {
    */
   completeSubtask(subtaskId, options = {}) {
     if (!this._state) {
-      throw new Error('No state loaded');
+      throw ErrorFactory.buildStateNotLoaded();
     }
 
     // Save checkpoint (AC2)
@@ -1039,7 +1041,7 @@ class BuildStateManager {
    */
   completeBuild() {
     if (!this._state) {
-      throw new Error('No state loaded');
+      throw ErrorFactory.buildStateNotLoaded();
     }
 
     this._state.status = BuildStatus.COMPLETED;
@@ -1073,7 +1075,7 @@ class BuildStateManager {
    */
   failBuild(reason) {
     if (!this._state) {
-      throw new Error('No state loaded');
+      throw ErrorFactory.buildStateNotLoaded();
     }
 
     this._state.status = BuildStatus.FAILED;

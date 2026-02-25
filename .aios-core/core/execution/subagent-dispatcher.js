@@ -11,6 +11,7 @@
 const EventEmitter = require('events');
 const { spawn } = require('child_process');
 const _path = require('path');
+const { ErrorFactory } = require('../errors');
 
 // Import AI Provider Factory
 let AIProviderFactory;
@@ -508,7 +509,7 @@ class SubagentDispatcher extends EventEmitter {
     ]);
 
     if (!claudeAvail && !geminiAvail) {
-      throw new Error('No AI providers available');
+      throw ErrorFactory.create('SYS_001', { operation: 'executeParallel', reason: 'No AI providers available' });
     }
 
     if (!claudeAvail) return this.executeWithSingleProvider(gemini, prompt, task);

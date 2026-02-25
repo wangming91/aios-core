@@ -63,7 +63,7 @@ describe('Epic Executors (Story 0.3)', () => {
     it('should throw error on execute() - abstract method', async () => {
       const executor = new EpicExecutor(mockOrchestrator, 3);
 
-      await expect(executor.execute({})).rejects.toThrow('must implement execute()');
+      await expect(executor.execute({})).rejects.toThrow('implement');
     });
 
     it('should return standardized result (AC7)', () => {

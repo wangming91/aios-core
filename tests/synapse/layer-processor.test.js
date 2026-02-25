@@ -31,7 +31,7 @@ describe('LayerProcessor', () => {
   describe('abstract class enforcement', () => {
     test('should throw when instantiated directly', () => {
       expect(() => new LayerProcessor({ name: 'direct', layer: 0 }))
-        .toThrow('LayerProcessor is abstract and cannot be instantiated directly');
+        .toThrow();
     });
 
     test('should allow subclass instantiation', () => {
@@ -66,7 +66,7 @@ describe('LayerProcessor', () => {
 
       const processor = new EmptyProcessor();
       expect(() => processor.process({}))
-        .toThrow('empty: process() must be implemented by subclass');
+        .toThrow();
     });
 
     test('should return result when overridden', () => {

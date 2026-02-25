@@ -27,6 +27,7 @@
  */
 
 const path = require('path');
+const { ErrorFactory } = require('../errors');
 
 // Optional dependency — RegistryHealer (IDS-4a, may not exist yet)
 let _RegistryHealer = null;
@@ -52,13 +53,13 @@ class FrameworkGovernor {
    */
   constructor(registryLoader, decisionEngine, registryUpdater, registryHealer = null) {
     if (!registryLoader) {
-      throw new Error('[IDS-Governor] RegistryLoader instance is required');
+      throw ErrorFactory.requiredFieldMissing('registryLoader');
     }
     if (!decisionEngine) {
-      throw new Error('[IDS-Governor] IncrementalDecisionEngine instance is required');
+      throw ErrorFactory.requiredFieldMissing('decisionEngine');
     }
     if (!registryUpdater) {
-      throw new Error('[IDS-Governor] RegistryUpdater instance is required');
+      throw ErrorFactory.requiredFieldMissing('registryUpdater');
     }
 
     this._loader = registryLoader;
@@ -81,7 +82,7 @@ class FrameworkGovernor {
    */
   async preCheck(intent, entityType) {
     if (intent == null || typeof intent !== 'string') {
-      throw new Error('[IDS-Governor] preCheck requires a string intent parameter');
+      throw ErrorFactory.invalidInput('intent', 'must be a string');
     }
     return this._withTimeout(async () => {
       const context = {};
@@ -144,7 +145,7 @@ class FrameworkGovernor {
    */
   async impactAnalysis(entityId) {
     if (!entityId || typeof entityId !== 'string') {
-      throw new Error('[IDS-Governor] impactAnalysis requires a non-empty entityId string');
+      throw ErrorFactory.invalidInput('entityId', 'must be a non-empty string');
     }
     return this._withTimeout(async () => {
       this._loader._ensureLoaded();
@@ -238,7 +239,7 @@ class FrameworkGovernor {
    */
   async postRegister(filePath, metadata = {}) {
     if (!filePath || typeof filePath !== 'string') {
-      throw new Error('[IDS-Governor] postRegister requires a non-empty filePath string');
+      throw ErrorFactory.invalidInput('filePath', 'must be a non-empty string');
     }
     return this._withTimeout(async () => {
       const task = {

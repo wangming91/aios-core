@@ -21,6 +21,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const EventEmitter = require('events');
+const { ErrorFactory } = require('../errors');
 
 // ═══════════════════════════════════════════════════════════════════════════════════
 //                              SUPPORTED AGENTS (AC2)
@@ -151,13 +152,13 @@ class AgentInvoker extends EventEmitter {
       // Validate agent (AC2)
       const agent = await this._loadAgent(agentName);
       if (!agent) {
-        throw new Error(`Unknown agent: ${agentName}`);
+        throw ErrorFactory.agentNotFound(agentName);
       }
 
       // Load task
       const task = await this._loadTask(taskPath);
       if (!task) {
-        throw new Error(`Task not found: ${taskPath}`);
+        throw ErrorFactory.fileNotFound(taskPath, { type: 'task' });
       }
 
       // Build context (AC3)
@@ -458,7 +459,7 @@ class AgentInvoker extends EventEmitter {
     }
 
     if (errors.length > 0) {
-      throw new Error(`Output validation failed: ${errors.join(', ')}`);
+      throw ErrorFactory.invalidInput('output', `Output validation failed: ${errors.join(', ')}`);
     }
   }
 

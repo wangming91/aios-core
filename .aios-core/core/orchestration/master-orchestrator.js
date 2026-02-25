@@ -23,6 +23,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const { EventEmitter } = require('events');
+const { ErrorFactory } = require('../errors');
 
 // Core dependencies
 const TechStackDetector = require('./tech-stack-detector');
@@ -413,7 +414,7 @@ class MasterOrchestrator extends EventEmitter {
 
     // Validate ready state
     if (this._state !== OrchestratorState.READY && this._state !== OrchestratorState.IN_PROGRESS) {
-      throw new Error(`Cannot execute pipeline in state: ${this._state}`);
+      throw ErrorFactory.invalidInput('state', `Cannot execute pipeline in state: ${this._state}`);
     }
 
     // Transition to in progress
@@ -550,7 +551,7 @@ class MasterOrchestrator extends EventEmitter {
   async executeEpic(epicNum, options = {}) {
     const epicConfig = EPIC_CONFIG[epicNum];
     if (!epicConfig) {
-      throw new Error(`Unknown epic number: ${epicNum}`);
+      throw ErrorFactory.invalidInput('epicNum', `Unknown epic number: ${epicNum}`);
     }
 
     this._log(`Starting Epic ${epicNum}: ${epicConfig.name}`, { icon: epicConfig.icon });

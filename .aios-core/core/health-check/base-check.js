@@ -9,6 +9,10 @@
  * @story HCS-2 - Health Check System Implementation
  */
 
+'use strict';
+
+const { ErrorFactory } = require('../errors');
+
 /**
  * Check severity levels
  * @enum {string}
@@ -64,14 +68,14 @@ class BaseCheck {
    */
   constructor(options) {
     if (new.target === BaseCheck) {
-      throw new Error('BaseCheck is abstract and cannot be instantiated directly');
+      throw ErrorFactory.featureNotImplemented('BaseCheck is abstract and cannot be instantiated directly');
     }
 
     // Validate required options
-    if (!options.id) throw new Error('Check must have an id');
-    if (!options.name) throw new Error('Check must have a name');
-    if (!options.domain) throw new Error('Check must have a domain');
-    if (!options.severity) throw new Error('Check must have a severity');
+    if (!options.id) throw ErrorFactory.requiredFieldMissing('id');
+    if (!options.name) throw ErrorFactory.requiredFieldMissing('name');
+    if (!options.domain) throw ErrorFactory.requiredFieldMissing('domain');
+    if (!options.severity) throw ErrorFactory.requiredFieldMissing('severity');
 
     this.id = options.id;
     this.name = options.name;
@@ -91,7 +95,7 @@ class BaseCheck {
    * @returns {Promise<CheckResult>} Check result
    */
   async execute(_context) {
-    throw new Error('execute() must be implemented by subclass');
+    throw ErrorFactory.featureNotImplemented('execute() must be implemented by subclass');
   }
 
   /**

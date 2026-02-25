@@ -124,14 +124,14 @@ describe('Agent Invoker (Story 0.7)', () => {
       const result = await invoker.invokeAgent('unknown-agent', 'sample-task');
 
       expect(result.success).toBe(false);
-      expect(result.error).toContain('Unknown agent');
+      expect(result.error).toContain('not found');
     });
 
     it('should fail for non-existent task', async () => {
       const result = await invoker.invokeAgent('dev', 'non-existent-task');
 
       expect(result.success).toBe(false);
-      expect(result.error).toContain('Task not found');
+      expect(result.error).toContain('not found');
     });
   });
 

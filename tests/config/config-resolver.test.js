@@ -266,7 +266,7 @@ describe('config-resolver', () => {
       const tmpDir = createTempProject({});
 
       try {
-        expect(() => loadLegacyConfig(tmpDir)).toThrow('Legacy config file not found');
+        expect(() => loadLegacyConfig(tmpDir)).toThrow('File not found');
       } finally {
         cleanupTempDir(tmpDir);
       }

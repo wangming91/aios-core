@@ -9,6 +9,7 @@
 const {
   collectEvents,
 } = require('./execution-test-helpers');
+const { isAIOSError } = require('../../.aios-core/core/errors');
 
 const {
   RateLimitManager,
@@ -164,7 +165,13 @@ describe('RateLimitManager', () => {
 
       const fn = () => { throw new Error('Rate limit exceeded'); };
 
-      await expect(rlm.executeWithRetry(fn)).rejects.toThrow('Rate limit exceeded after 2 retries');
+      try {
+        await rlm.executeWithRetry(fn);
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('SYS_001');
+      }
       expect(rlm.metrics.rateLimitHits).toBe(2);
     });
 

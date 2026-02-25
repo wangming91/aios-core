@@ -21,6 +21,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const crypto = require('crypto');
+const { ErrorFactory } = require('../errors');
 
 const { RegistryLoader } = require(path.resolve(__dirname, 'registry-loader.js'));
 const {
@@ -676,7 +677,7 @@ class RegistryHealer {
     try {
       fs.copyFileSync(this._registryPath, backupPath);
     } catch (err) {
-      throw new Error(`Failed to create backup: ${err.message}`);
+      throw ErrorFactory.idsBackupCreateFailed(err.message);
     }
 
     // Retain only last MAX_BACKUPS
@@ -694,7 +695,7 @@ class RegistryHealer {
     const backupPath = path.join(this._backupDir, `${batchId}.yaml`);
 
     if (!fs.existsSync(backupPath)) {
-      throw new Error(`Backup not found for batch: ${batchId}`);
+      throw ErrorFactory.idsBackupNotFound(batchId);
     }
 
     try {
@@ -710,7 +711,7 @@ class RegistryHealer {
       this._loader.load();
       return true;
     } catch (err) {
-      throw new Error(`Rollback failed: ${err.message}`);
+      throw ErrorFactory.idsRollbackFailed(err.message);
     }
   }
 

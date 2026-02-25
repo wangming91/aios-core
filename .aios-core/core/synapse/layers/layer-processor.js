@@ -11,6 +11,8 @@
  * @created Story SYN-4 - Layer Processors L0-L3
  */
 
+const { ErrorFactory } = require('../../errors');
+
 /**
  * Abstract base class for SYNAPSE layer processors.
  *
@@ -29,7 +31,7 @@ class LayerProcessor {
    */
   constructor({ name, layer, timeout = 15 }) {
     if (new.target === LayerProcessor) {
-      throw new Error('LayerProcessor is abstract and cannot be instantiated directly');
+      throw ErrorFactory.featureNotImplemented('LayerProcessor', 'LayerProcessor is abstract and cannot be instantiated directly');
     }
     this.name = name;
     this.layer = layer;
@@ -51,7 +53,7 @@ class LayerProcessor {
    * @returns {{ rules: string[], metadata: object } | null} Rules and metadata, or null to skip
    */
   process(context) {
-    throw new Error(`${this.name}: process() must be implemented by subclass`);
+    throw ErrorFactory.featureNotImplemented('process', `${this.name}: process() must be implemented by subclass`);
   }
 
   /**

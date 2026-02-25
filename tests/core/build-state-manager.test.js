@@ -22,6 +22,8 @@ const {
   DEFAULT_CONFIG,
 } = require('../../.aios-core/core/execution/build-state-manager');
 
+const { isAIOSError } = require('../../.aios-core/core/errors');
+
 // ═══════════════════════════════════════════════════════════════════════════════════
 //                              TEST SETUP
 // ═══════════════════════════════════════════════════════════════════════════════════
@@ -158,7 +160,14 @@ describe('BuildStateManager', () => {
     });
 
     test('should throw when storyId not provided', () => {
-      expect(() => new BuildStateManager(null)).toThrow('storyId is required');
+      try {
+        new BuildStateManager(null);
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+        expect(error.message).toContain('storyId');
+      }
     });
   });
 
@@ -260,7 +269,13 @@ describe('BuildStateManager', () => {
     });
 
     test('should throw when no state exists', () => {
-      expect(() => manager.resumeBuild()).toThrow('No build state found');
+      try {
+        manager.resumeBuild();
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('BLD_001');
+      }
     });
 
     test('should throw when build already completed', () => {
@@ -272,7 +287,13 @@ describe('BuildStateManager', () => {
         rootPath: testDir,
       });
 
-      expect(() => manager2.resumeBuild()).toThrow('already completed');
+      try {
+        manager2.resumeBuild();
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('BLD_002');
+      }
     });
 
     test('should allow resume of failed build', () => {

@@ -10,6 +10,7 @@
  */
 
 const { BaseCheck, CheckSeverity, CheckDomain } = require('./base-check');
+const { ErrorFactory } = require('../errors');
 
 /**
  * Registry for health checks
@@ -46,11 +47,11 @@ class CheckRegistry {
    */
   register(check) {
     if (!(check instanceof BaseCheck)) {
-      throw new Error('Check must be an instance of BaseCheck');
+      throw ErrorFactory.invalidInput('check', 'Check must be an instance of BaseCheck');
     }
 
     if (this.checks.has(check.id)) {
-      throw new Error(`Check with id '${check.id}' is already registered`);
+      throw ErrorFactory.invalidInput('check', `Check with id '${check.id}' is already registered`);
     }
 
     // Add to main registry

@@ -9,6 +9,7 @@
  * @story HCS-2 - Health Check System Implementation
  */
 
+const { ErrorFactory } = require('../../errors');
 const MarkdownReporter = require('./markdown');
 const JSONReporter = require('./json');
 const ConsoleReporter = require('./console');
@@ -103,7 +104,7 @@ class ReporterManager {
    */
   registerReporter(name, reporter) {
     if (typeof reporter.generate !== 'function') {
-      throw new Error('Reporter must implement generate() method');
+      throw ErrorFactory.invalidInput('reporter', 'Reporter must implement generate() method');
     }
     this.reporters[name] = reporter;
   }

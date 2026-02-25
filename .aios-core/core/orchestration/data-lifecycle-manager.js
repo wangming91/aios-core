@@ -18,6 +18,7 @@ const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const { ErrorFactory } = require('../errors');
 
 const LockManager = require('./lock-manager');
 
@@ -52,7 +53,7 @@ class DataLifecycleManager {
    */
   constructor(projectRoot, options = {}) {
     if (!projectRoot || typeof projectRoot !== 'string') {
-      throw new Error('projectRoot is required and must be a string');
+      throw ErrorFactory.requiredFieldMissing('projectRoot');
     }
 
     this.projectRoot = projectRoot;

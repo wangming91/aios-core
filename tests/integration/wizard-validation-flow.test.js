@@ -6,6 +6,9 @@
 const { validateInstallation } = require('../../packages/installer/src/wizard/validation');
 
 describe('Wizard Validation Flow', () => {
+  // Integration tests need longer timeout
+  jest.setTimeout(30000);
+
   it('should validate complete installation successfully', async () => {
     // Given - mock installation context
     const installationContext = {

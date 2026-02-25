@@ -4,13 +4,14 @@
 
 ---
 
-## 🌐 Select Language / Selecione o Idioma / Seleccione el Idioma
+## 🌐 Select Language / Selecione o Idioma / Seleccione el Idioma / 选择语言
 
 | Language      | Status      | Link                                                    |
 | ------------- | ----------- | ------------------------------------------------------- |
 | **English**   | ✅ Complete | [📖 English Documentation](./getting-started.md)        |
 | **Português** | ✅ Complete | [📖 Documentação em Português](./pt/getting-started.md) |
 | **Español**   | ✅ Complete | [📖 Documentación en Español](./es/getting-started.md)  |
+| **简体中文**  | ✅ Complete | [📖 中文文档](./zh-cn/getting-started.md)               |
 
 ---
 
@@ -96,14 +97,14 @@ We follow industry-standard i18n practices:
 
 ### Translation Status
 
-| Section         | EN  | PT  | ES  |
-| --------------- | --- | --- | --- |
-| Getting Started | ✅  | ✅  | ✅  |
-| Guides          | ✅  | ✅  | ✅  |
-| Installation    | ✅  | ✅  | ✅  |
-| Architecture    | ✅  | ✅  | ✅  |
-| Framework       | ✅  | ✅  | ✅  |
-| Platforms       | ✅  | ✅  | ✅  |
+| Section         | EN  | PT  | ES  | ZH-CN |
+| --------------- | --- | --- | --- | ----- |
+| Getting Started | ✅  | ✅  | ✅  | ✅     |
+| Guides          | ✅  | ✅  | ✅  | 🔄     |
+| Installation    | ✅  | ✅  | ✅  | 🔄     |
+| Architecture    | ✅  | ✅  | ✅  | 🔄     |
+| Framework       | ✅  | ✅  | ✅  | 🔄     |
+| Platforms       | ✅  | ✅  | ✅  | 🔄     |
 
 ---
 

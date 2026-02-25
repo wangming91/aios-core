@@ -9,6 +9,7 @@
  */
 
 const chalk = require('chalk');
+const { ErrorFactory } = require('../errors');
 
 /**
  * Manages parallel execution of workflow phases
@@ -148,7 +149,7 @@ class ParallelExecutor {
 
     while (this.hasRunningTasks()) {
       if (Date.now() - startTime > timeout) {
-        throw new Error('Timeout waiting for parallel tasks to complete');
+        throw ErrorFactory.create('SYS_001', { operation: 'waitForCompletion', reason: 'Timeout waiting for parallel tasks to complete' });
       }
       await new Promise(resolve => setTimeout(resolve, 100));
     }

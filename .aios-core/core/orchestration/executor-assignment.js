@@ -16,6 +16,8 @@
  * @version 1.0.0
  */
 
+const { ErrorFactory } = require('../errors');
+
 /**
  * @typedef {Object} ExecutorAssignment
  * @property {string} executor - The assigned executor agent (e.g., '@dev')
@@ -263,9 +265,9 @@ function assignExecutor(storyType) {
 
   // Validation: executor must be different from quality gate
   if (assignment.executor === assignment.quality_gate) {
-    throw new Error(
-      `[ExecutorAssignment] Invalid configuration: executor (${assignment.executor}) ` +
-        `cannot be the same as quality_gate (${assignment.quality_gate}) for type "${storyType}"`,
+    throw ErrorFactory.invalidInput(
+      'executor',
+      `Invalid configuration: executor (${assignment.executor}) cannot be the same as quality_gate for type "${storyType}"`,
     );
   }
 

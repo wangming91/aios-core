@@ -9,6 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const { StoryModel, StoryStatus } = require('./story-model');
+const { ErrorFactory } = require('../errors');
 
 /**
  * StoryManager 类
@@ -36,7 +37,7 @@ class StoryManager {
     // 验证数据
     const validation = this.model.validate(storyData);
     if (!validation.valid) {
-      throw new Error(`Invalid story data: ${validation.errors.join(', ')}`);
+      throw ErrorFactory.invalidInput('storyData', `Invalid story data: ${validation.errors.join(', ')}`);
     }
 
     // 创建 Story 对象
@@ -133,7 +134,7 @@ class StoryManager {
     // 验证
     const validation = this.model.validate(updatedStory);
     if (!validation.valid) {
-      throw new Error(`Invalid story data: ${validation.errors.join(', ')}`);
+      throw ErrorFactory.invalidInput('storyData', `Invalid story data: ${validation.errors.join(', ')}`);
     }
 
     // 写入文件

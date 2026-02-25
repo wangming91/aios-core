@@ -16,6 +16,7 @@
 const { randomUUID } = require('crypto');
 const fs = require('fs-extra');
 const path = require('path');
+const { ErrorFactory } = require('../errors');
 const { DashboardEventType } = require('./types');
 
 const MONITOR_SERVER_URL = process.env.AIOS_MONITOR_URL || 'http://localhost:4001/events';
@@ -331,7 +332,7 @@ class DashboardEmitter {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        throw ErrorFactory.create('NET_001', { operation: 'httpRequest', reason: `HTTP ${response.status}` });
       }
     } finally {
       clearTimeout(timeout);

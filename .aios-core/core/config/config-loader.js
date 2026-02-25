@@ -25,6 +25,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
+const { ErrorFactory } = require('../errors');
 
 /**
  * Config cache with TTL
@@ -114,7 +115,7 @@ async function loadFullConfig() {
     return config;
   } catch (error) {
     console.error('Failed to load core-config.yaml:', error.message);
-    throw new Error(`Config load failed: ${error.message}`);
+    throw ErrorFactory.create('CFG_001', { reason: error.message });
   }
 }
 

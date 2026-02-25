@@ -16,6 +16,7 @@
 'use strict';
 
 const path = require('path');
+const { ErrorFactory } = require('../../errors');
 const { collectHookStatus } = require('./collectors/hook-collector');
 const { collectSessionStatus } = require('./collectors/session-collector');
 const { collectManifestIntegrity } = require('./collectors/manifest-collector');
@@ -48,7 +49,7 @@ function _safeCollect(name, fn) {
  */
 function _collectAll(projectRoot, options) {
   if (!projectRoot || typeof projectRoot !== 'string') {
-    throw new Error('projectRoot is required and must be a string');
+    throw ErrorFactory.requiredFieldMissing('projectRoot');
   }
 
   const synapsePath = path.join(projectRoot, '.synapse');

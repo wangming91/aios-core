@@ -22,6 +22,7 @@ const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const { ErrorFactory } = require('../errors');
 
 // Import dependencies from Story 11.1, 11.2, and 11.5
 const ExecutorAssignment = require('./executor-assignment');
@@ -360,7 +361,7 @@ class WorkflowExecutor {
     // Extract YAML from markdown frontmatter
     const yamlMatch = content.match(/```yaml\n([\s\S]*?)```/);
     if (!yamlMatch) {
-      throw new Error(`No YAML frontmatter found in story: ${storyPath}`);
+      throw ErrorFactory.invalidInput('storyPath', `No YAML frontmatter found in story: ${storyPath}`);
     }
 
     return yaml.load(yamlMatch[1]);

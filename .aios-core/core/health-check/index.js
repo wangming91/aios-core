@@ -10,6 +10,7 @@
  * @story HCS-2 - Health Check System Implementation
  */
 
+const { ErrorFactory } = require('../errors');
 const HealthCheckEngine = require('./engine');
 const { BaseCheck, CheckSeverity, CheckStatus } = require('./base-check');
 const CheckRegistry = require('./check-registry');
@@ -129,7 +130,7 @@ class HealthCheck {
 
       return this.results;
     } catch (error) {
-      throw new Error(`Health check failed: ${error.message}`);
+      throw ErrorFactory.create('SYS_001', { operation: 'healthCheck', reason: error.message });
     }
   }
 

@@ -2,6 +2,7 @@
 
 const path = require('path');
 const { RegistryLoader } = require('../../../.aios-core/core/ids/registry-loader');
+const { isAIOSError } = require('../../../.aios-core/core/errors');
 const {
   IncrementalDecisionEngine,
   STOP_WORDS,
@@ -33,12 +34,20 @@ describe('IncrementalDecisionEngine', () => {
 
   describe('constructor', () => {
     it('requires a RegistryLoader instance', () => {
-      expect(() => new IncrementalDecisionEngine(null)).toThrow(
-        /requires a RegistryLoader instance/,
-      );
-      expect(() => new IncrementalDecisionEngine()).toThrow(
-        /requires a RegistryLoader instance/,
-      );
+      try {
+        new IncrementalDecisionEngine(null);
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
+      try {
+        new IncrementalDecisionEngine();
+        fail('Expected AIOSError to be thrown');
+      } catch (error) {
+        expect(isAIOSError(error)).toBe(true);
+        expect(error.code).toBe('VAL_002');
+      }
     });
 
     it('creates engine with valid loader', () => {

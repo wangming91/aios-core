@@ -181,7 +181,7 @@ describe('BuildOrchestrator', () => {
       orchestrator.activeBuilds.set('story-1', { storyId: 'story-1' });
 
       await expect(orchestrator.build('story-1')).rejects.toThrow(
-        'Build already in progress for story-1',
+        'already completed',
       );
     });
 
@@ -192,7 +192,7 @@ describe('BuildOrchestrator', () => {
       });
 
       expect(result.success).toBe(false);
-      expect(result.error).toContain('Story not found');
+      expect(result.error).toContain('not found');
       expect(result.phase).toBe(Phase.INIT);
     });
 
@@ -242,7 +242,7 @@ describe('BuildOrchestrator', () => {
     test('should throw if story not found (BO-13)', async () => {
       const ctx = { storyId: 'nonexistent', config: orchestrator.config };
 
-      await expect(orchestrator.phaseInit(ctx)).rejects.toThrow('Story not found');
+      await expect(orchestrator.phaseInit(ctx)).rejects.toThrow('not found');
     });
   });
 
